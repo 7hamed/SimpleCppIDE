@@ -360,6 +360,9 @@ namespace SimpleCppIDE
                 }
             }
 
+            if (notSavedFiles.Count == 0)
+                return;
+
             var ans = MessageBox.Show($"{namesOfNotSavedFiles}\nYou have unsaved changes.\nDo you want to save these files before exiting?",
                 "Unsaved Changes", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
             
