@@ -19,6 +19,8 @@ namespace SimpleCppIDE
         private List<clsCppFile> _openedFiles = new List<clsCppFile>();
         private clsCppFile _currentFile;
 
+        private int _prevOpenedFileIndex;
+
         private bool _isFileChanged = false;
 
         public frmIDE()
@@ -31,8 +33,6 @@ namespace SimpleCppIDE
             _SaveFile();
 
             clsCompiler.Compile("test.cpp");
-
-            
 
         }
 
@@ -49,14 +49,14 @@ namespace SimpleCppIDE
             MessageBox.Show("save file is done");
         }
 
-        private void tsmSave_Click(object sender, EventArgs e)
+        private void SaveCurrentFile()
         {
             if (_currentFile == null)
             {
                 MessageBox.Show("there is no file exist to save.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            
+
             if (_currentFile.FilePath == null) // for new file
             {
                 var ans = sfdIDE.ShowDialog();
@@ -71,8 +71,16 @@ namespace SimpleCppIDE
             if (_currentFile.Save())
             {
                 MessageBox.Show("File Saved Successfully.", "Save", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                UpdateOpenedFileList();
+
                 return;
             }
+        }
+
+        private void tsmSave_Click(object sender, EventArgs e)
+        {
+            SaveCurrentFile();
 
         }
 
@@ -98,10 +106,11 @@ namespace SimpleCppIDE
 
             if (ans == DialogResult.OK)
             {
-                _currentFile = new clsCppFile(ofdIDE.FileName);
-                _openedFiles.Add(_currentFile);
+                var openedFile = new clsCppFile(ofdIDE.FileName);
 
-                OpenCurrentFile();
+                AddToOpendFileList(openedFile);
+
+                SetCurrentFile(openedFile);
             }
         }
 
@@ -122,16 +131,17 @@ namespace SimpleCppIDE
 
         private void tsmNew_Click(object sender, EventArgs e)
         {
-            _currentFile = new clsCppFile();
-            _openedFiles.Add(_currentFile);
+            var newFile = new clsCppFile();
 
-            _currentFile.FileName = "new_file";
-            _currentFile.Content = "";
+            newFile.FileName = "new_file";
+            newFile.Content = "new cpp file";
 
-            OpenCurrentFile();
+            AddToOpendFileList(newFile);
+
+            SetCurrentFile(newFile);
         }
 
-        private void OpenCurrentFile()
+        private void OpenCurrentFileOnEditor()
         {
             rtxtCodeEditor.Text = _currentFile.Content;
             _currentFile.isChanged = false;
@@ -142,7 +152,67 @@ namespace SimpleCppIDE
 
         private void UpdateOpenedFileList()
         {
+            _prevOpenedFileIndex = cbOpenedFiles.SelectedIndex;
+            cbOpenedFiles.Items.Clear();
 
+            foreach (var file in _openedFiles)
+            {
+                cbOpenedFiles.Items.Add(file.FileName);
+                
+
+            }
+
+            cbOpenedFiles.SelectedIndex = _prevOpenedFileIndex;
         }
+
+        private void AddToOpendFileList(clsCppFile file)
+        {
+            _openedFiles.Add(file);
+
+            UpdateOpenedFileList();
+        }
+
+
+        private void SetCurrentFile(clsCppFile file)
+        {
+            _currentFile = file;
+
+            cbOpenedFiles.SelectedIndex = _openedFiles.IndexOf(file);
+
+            OpenCurrentFileOnEditor();
+        }
+
+        private void cbOpenedFiles_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            if (_prevOpenedFileIndex == cbOpenedFiles.SelectedIndex)
+                return;
+
+            if (_currentFile.isChanged)
+            {
+                var ans = MessageBox.Show("before change the file.\nplease save the file...", "Warning", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
+                if (ans == DialogResult.OK)
+                    SaveCurrentFile();
+                else
+                {
+                    cbOpenedFiles.SelectedIndex = _prevOpenedFileIndex;
+                    return;
+                }
+            }
+
+            SetCurrentFile(_openedFiles[cbOpenedFiles.SelectedIndex]);
+        }
+
+        private void cbOpenedFiles_DropDown(object sender, EventArgs e)
+        {
+            if (cbOpenedFiles.Items.Count > 0)
+                _prevOpenedFileIndex = cbOpenedFiles.SelectedIndex;
+        }
+
+        private void cbOpenedFiles_KeyDown(object sender, KeyEventArgs e) // keyboard not affect at all
+        {
+                e.SuppressKeyPress = true;
+                e.Handled = true;
+        }
+
     }
 }

@@ -35,12 +35,12 @@
             this.tsmOpen = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmSave = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cbOpenedFiles = new System.Windows.Forms.ComboBox();
+            this.btnFileInfo = new System.Windows.Forms.Button();
             this.btnRun = new System.Windows.Forms.Button();
             this.ofdIDE = new System.Windows.Forms.OpenFileDialog();
             this.rtxtCodeEditor = new System.Windows.Forms.RichTextBox();
-            this.btnFileInfo = new System.Windows.Forms.Button();
             this.sfdIDE = new System.Windows.Forms.SaveFileDialog();
-            this.cbOpenedFiles = new System.Windows.Forms.ComboBox();
             this.msMainMenu.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -80,21 +80,21 @@
             // tsmNew
             // 
             this.tsmNew.Name = "tsmNew";
-            this.tsmNew.Size = new System.Drawing.Size(224, 26);
+            this.tsmNew.Size = new System.Drawing.Size(126, 26);
             this.tsmNew.Text = "new";
             this.tsmNew.Click += new System.EventHandler(this.tsmNew_Click);
             // 
             // tsmOpen
             // 
             this.tsmOpen.Name = "tsmOpen";
-            this.tsmOpen.Size = new System.Drawing.Size(224, 26);
+            this.tsmOpen.Size = new System.Drawing.Size(126, 26);
             this.tsmOpen.Text = "open";
             this.tsmOpen.Click += new System.EventHandler(this.tsmOpen_Click);
             // 
             // tsmSave
             // 
             this.tsmSave.Name = "tsmSave";
-            this.tsmSave.Size = new System.Drawing.Size(224, 26);
+            this.tsmSave.Size = new System.Drawing.Size(126, 26);
             this.tsmSave.Text = "save";
             this.tsmSave.Click += new System.EventHandler(this.tsmSave_Click);
             // 
@@ -111,6 +111,29 @@
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "groupBox1";
+            // 
+            // cbOpenedFiles
+            // 
+            this.cbOpenedFiles.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbOpenedFiles.FormattingEnabled = true;
+            this.cbOpenedFiles.Location = new System.Drawing.Point(648, 22);
+            this.cbOpenedFiles.Name = "cbOpenedFiles";
+            this.cbOpenedFiles.Size = new System.Drawing.Size(261, 24);
+            this.cbOpenedFiles.TabIndex = 5;
+            this.cbOpenedFiles.DropDown += new System.EventHandler(this.cbOpenedFiles_DropDown);
+            this.cbOpenedFiles.SelectionChangeCommitted += new System.EventHandler(this.cbOpenedFiles_SelectionChangeCommitted);
+            this.cbOpenedFiles.KeyDown += new System.Windows.Forms.KeyEventHandler(this.cbOpenedFiles_KeyDown);
+            // 
+            // btnFileInfo
+            // 
+            this.btnFileInfo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFileInfo.Location = new System.Drawing.Point(310, 19);
+            this.btnFileInfo.Name = "btnFileInfo";
+            this.btnFileInfo.Size = new System.Drawing.Size(90, 29);
+            this.btnFileInfo.TabIndex = 3;
+            this.btnFileInfo.Text = "FIle Info";
+            this.btnFileInfo.UseVisualStyleBackColor = true;
+            this.btnFileInfo.Click += new System.EventHandler(this.btnFileInfo_Click);
             // 
             // btnRun
             // 
@@ -142,30 +165,11 @@
             this.rtxtCodeEditor.WordWrap = false;
             this.rtxtCodeEditor.TextChanged += new System.EventHandler(this.rtxtCodeEditor_TextChanged);
             // 
-            // btnFileInfo
-            // 
-            this.btnFileInfo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnFileInfo.Location = new System.Drawing.Point(310, 19);
-            this.btnFileInfo.Name = "btnFileInfo";
-            this.btnFileInfo.Size = new System.Drawing.Size(90, 29);
-            this.btnFileInfo.TabIndex = 3;
-            this.btnFileInfo.Text = "FIle Info";
-            this.btnFileInfo.UseVisualStyleBackColor = true;
-            this.btnFileInfo.Click += new System.EventHandler(this.btnFileInfo_Click);
-            // 
             // sfdIDE
             // 
             this.sfdIDE.DefaultExt = "cpp";
             this.sfdIDE.Filter = "C++ Files|*.cpp|All Files|*.*";
             this.sfdIDE.Title = "Save Cpp File";
-            // 
-            // cbOpenedFiles
-            // 
-            this.cbOpenedFiles.FormattingEnabled = true;
-            this.cbOpenedFiles.Location = new System.Drawing.Point(836, 24);
-            this.cbOpenedFiles.Name = "cbOpenedFiles";
-            this.cbOpenedFiles.Size = new System.Drawing.Size(121, 24);
-            this.cbOpenedFiles.TabIndex = 5;
             // 
             // frmIDE
             // 
