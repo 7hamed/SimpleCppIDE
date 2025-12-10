@@ -21,7 +21,6 @@ namespace SimpleCppIDE
 
         private int _prevOpenedFileIndex;
 
-        private bool _isFileChanged = false;
 
         public frmIDE()
         {
@@ -37,7 +36,26 @@ namespace SimpleCppIDE
         }
 
 
+        private void UpdateSaveFlag(bool isChanged)
+        {
+            if (_currentFile == null)
+            {
+                lblSaveFlag.Text = "";
+                return;
+            }
 
+            
+            if (isChanged)
+            {
+                lblSaveFlag.Text = "Not Save";
+                lblSaveFlag.ForeColor = Color.Red;
+            }
+            else
+            {
+                lblSaveFlag.Text = "Saved";
+                lblSaveFlag.ForeColor = Color.Green;
+            }
+        }
         
 
         private void _SaveFile()
@@ -70,9 +88,10 @@ namespace SimpleCppIDE
             _currentFile.Content = rtxtCodeEditor.Text;
             if (_currentFile.Save())
             {
-                MessageBox.Show("File Saved Successfully.", "Save", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //MessageBox.Show("File Saved Successfully.", "Save", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 UpdateOpenedFileList();
+                UpdateSaveFlag(_currentFile.isChanged);
 
                 return;
             }
@@ -102,21 +121,46 @@ namespace SimpleCppIDE
 
         private void tsmOpen_Click(object sender, EventArgs e)
         {
+            if (_currentFile != null && _currentFile.isChanged)
+            {
+                var result = MessageBox.Show("before open a file.\nplease save the file...", _currentFile.FileName, MessageBoxButtons.OKCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
+                if (result == DialogResult.OK)
+                    SaveCurrentFile();
+                else
+                    return;
+            }
+            
             var ans = ofdIDE.ShowDialog();
 
             if (ans == DialogResult.OK)
             {
+                
+
                 var openedFile = new clsCppFile(ofdIDE.FileName);
 
                 AddToOpendFileList(openedFile);
 
                 SetCurrentFile(openedFile);
+
+                UpdateSaveFlag(_currentFile.isChanged);
+
+                SetCodeEditorEnabledByCurrentFile();
             }
+        }
+
+        private void SetCodeEditorEnabledByCurrentFile()
+        {
+            if (_currentFile == null)
+                rtxtCodeEditor.Enabled = false;
+            else
+                rtxtCodeEditor.Enabled = true;
         }
 
         private void frmIDE_Load(object sender, EventArgs e)
         {
-            
+            SetCodeEditorEnabledByCurrentFile();
+
+            UpdateSaveFlag(false);
         }
 
         private void btnFileInfo_Click(object sender, EventArgs e)
@@ -126,7 +170,11 @@ namespace SimpleCppIDE
 
         private void rtxtCodeEditor_TextChanged(object sender, EventArgs e)
         {
-            _currentFile.isChanged = true;
+            if (_currentFile != null)
+            {
+                _currentFile.isChanged = true;
+                UpdateSaveFlag(_currentFile.isChanged);
+            }
         }
 
         private void tsmNew_Click(object sender, EventArgs e)
@@ -139,12 +187,25 @@ namespace SimpleCppIDE
             AddToOpendFileList(newFile);
 
             SetCurrentFile(newFile);
+
+            UpdateSaveFlag(_currentFile.isChanged);
+
+            SetCodeEditorEnabledByCurrentFile();
         }
 
         private void OpenCurrentFileOnEditor()
         {
-            rtxtCodeEditor.Text = _currentFile.Content;
-            _currentFile.isChanged = false;
+            if (_currentFile == null)
+            {
+                rtxtCodeEditor.Text = "";
+                UpdateSaveFlag(false);
+            }
+            else
+            {
+                rtxtCodeEditor.Text = _currentFile.Content;
+                _currentFile.isChanged = false;
+                UpdateSaveFlag(_currentFile.isChanged);
+            }
 
 
         }
@@ -158,8 +219,6 @@ namespace SimpleCppIDE
             foreach (var file in _openedFiles)
             {
                 cbOpenedFiles.Items.Add(file.FileName);
-                
-
             }
 
             cbOpenedFiles.SelectedIndex = _prevOpenedFileIndex;
@@ -172,14 +231,23 @@ namespace SimpleCppIDE
             UpdateOpenedFileList();
         }
 
-
         private void SetCurrentFile(clsCppFile file)
         {
-            _currentFile = file;
+            if (file == null)
+            {
+                _currentFile = null;
+                cbOpenedFiles.SelectedIndex = -1;
+                SetCodeEditorEnabledByCurrentFile();
+                OpenCurrentFileOnEditor();
 
+                return;
+            }
+            
+            _currentFile = file;
             cbOpenedFiles.SelectedIndex = _openedFiles.IndexOf(file);
 
             OpenCurrentFileOnEditor();
+            SetCodeEditorEnabledByCurrentFile();
         }
 
         private void cbOpenedFiles_SelectionChangeCommitted(object sender, EventArgs e)
@@ -189,7 +257,7 @@ namespace SimpleCppIDE
 
             if (_currentFile.isChanged)
             {
-                var ans = MessageBox.Show("before change the file.\nplease save the file...", "Warning", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
+                var ans = MessageBox.Show("before change the file.\nplease save the file...", _currentFile.FileName, MessageBoxButtons.OKCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
                 if (ans == DialogResult.OK)
                     SaveCurrentFile();
                 else
@@ -210,9 +278,62 @@ namespace SimpleCppIDE
 
         private void cbOpenedFiles_KeyDown(object sender, KeyEventArgs e) // keyboard not affect at all
         {
-                e.SuppressKeyPress = true;
-                e.Handled = true;
+            e.SuppressKeyPress = true;
+            e.Handled = true;
         }
 
+        private void CloseCurrentFile()
+        {
+            if (_currentFile == null)
+            {
+                MessageBox.Show("there is no exist file, cant close perform");
+                return;
+            }
+            
+            if (_currentFile.isChanged)
+            {
+                var ans = MessageBox.Show("before close the file.\nplease save the file...", _currentFile.FileName, MessageBoxButtons.OKCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
+                if (ans == DialogResult.OK)
+                    SaveCurrentFile();
+                else
+                    return;
+            }
+
+            int currentIndex = _openedFiles.IndexOf(_currentFile);
+            _openedFiles.RemoveAt(currentIndex);
+
+            if (_openedFiles.Count == 0)
+            {
+                SetCurrentFile(null);
+            }
+            else
+            {
+                int newIndex = (currentIndex - 1 < 0 ? currentIndex : currentIndex - 1);
+                SetCurrentFile(_openedFiles[newIndex]);
+            }
+
+            UpdateOpenedFileList();
+        }
+
+        private void tsmClose_Click(object sender, EventArgs e)
+        {
+            CloseCurrentFile();
+        }
+
+        private void frmIDE_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (_currentFile != null && _currentFile.isChanged)
+            {
+                var ans = MessageBox.Show("before close the IDE.\nplease save the file...", _currentFile.FileName, MessageBoxButtons.OKCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
+                if (ans == DialogResult.OK)
+                    SaveCurrentFile();
+                else
+                {
+                    e.Cancel = true;
+                    return;
+                }
+            }
+            
+        }
     }
 }

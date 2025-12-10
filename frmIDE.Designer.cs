@@ -41,6 +41,8 @@
             this.ofdIDE = new System.Windows.Forms.OpenFileDialog();
             this.rtxtCodeEditor = new System.Windows.Forms.RichTextBox();
             this.sfdIDE = new System.Windows.Forms.SaveFileDialog();
+            this.lblSaveFlag = new System.Windows.Forms.Label();
+            this.tsmClose = new System.Windows.Forms.ToolStripMenuItem();
             this.msMainMenu.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -63,7 +65,7 @@
             this.tsmFile});
             this.msMainMenu.Location = new System.Drawing.Point(0, 0);
             this.msMainMenu.Name = "msMainMenu";
-            this.msMainMenu.Size = new System.Drawing.Size(984, 28);
+            this.msMainMenu.Size = new System.Drawing.Size(984, 30);
             this.msMainMenu.TabIndex = 2;
             this.msMainMenu.Text = "menuStrip1";
             // 
@@ -72,40 +74,45 @@
             this.tsmFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmNew,
             this.tsmOpen,
-            this.tsmSave});
+            this.tsmSave,
+            this.tsmClose});
             this.tsmFile.Name = "tsmFile";
             this.tsmFile.Size = new System.Drawing.Size(46, 24);
-            this.tsmFile.Text = "File";
+            this.tsmFile.Text = "&File";
             // 
             // tsmNew
             // 
             this.tsmNew.Name = "tsmNew";
-            this.tsmNew.Size = new System.Drawing.Size(126, 26);
-            this.tsmNew.Text = "new";
+            this.tsmNew.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
+            this.tsmNew.Size = new System.Drawing.Size(224, 26);
+            this.tsmNew.Text = "&New";
             this.tsmNew.Click += new System.EventHandler(this.tsmNew_Click);
             // 
             // tsmOpen
             // 
             this.tsmOpen.Name = "tsmOpen";
-            this.tsmOpen.Size = new System.Drawing.Size(126, 26);
-            this.tsmOpen.Text = "open";
+            this.tsmOpen.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
+            this.tsmOpen.Size = new System.Drawing.Size(224, 26);
+            this.tsmOpen.Text = "&Open";
             this.tsmOpen.Click += new System.EventHandler(this.tsmOpen_Click);
             // 
             // tsmSave
             // 
             this.tsmSave.Name = "tsmSave";
-            this.tsmSave.Size = new System.Drawing.Size(126, 26);
-            this.tsmSave.Text = "save";
+            this.tsmSave.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.tsmSave.Size = new System.Drawing.Size(224, 26);
+            this.tsmSave.Text = "&Save";
             this.tsmSave.Click += new System.EventHandler(this.tsmSave_Click);
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.lblSaveFlag);
             this.groupBox1.Controls.Add(this.cbOpenedFiles);
             this.groupBox1.Controls.Add(this.btnFileInfo);
             this.groupBox1.Controls.Add(this.btnRun);
             this.groupBox1.Controls.Add(this.btnCompile);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.groupBox1.Location = new System.Drawing.Point(0, 28);
+            this.groupBox1.Location = new System.Drawing.Point(0, 30);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(984, 60);
             this.groupBox1.TabIndex = 3;
@@ -171,6 +178,24 @@
             this.sfdIDE.Filter = "C++ Files|*.cpp|All Files|*.*";
             this.sfdIDE.Title = "Save Cpp File";
             // 
+            // lblSaveFlag
+            // 
+            this.lblSaveFlag.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSaveFlag.Location = new System.Drawing.Point(542, 23);
+            this.lblSaveFlag.Name = "lblSaveFlag";
+            this.lblSaveFlag.Size = new System.Drawing.Size(100, 23);
+            this.lblSaveFlag.TabIndex = 6;
+            this.lblSaveFlag.Text = "not save";
+            this.lblSaveFlag.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // tsmClose
+            // 
+            this.tsmClose.Name = "tsmClose";
+            this.tsmClose.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.W)));
+            this.tsmClose.Size = new System.Drawing.Size(224, 26);
+            this.tsmClose.Text = "&Close";
+            this.tsmClose.Click += new System.EventHandler(this.tsmClose_Click);
+            // 
             // frmIDE
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -182,6 +207,7 @@
             this.MainMenuStrip = this.msMainMenu;
             this.Name = "frmIDE";
             this.Text = "frmIDE";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmIDE_FormClosing);
             this.Load += new System.EventHandler(this.frmIDE_Load);
             this.msMainMenu.ResumeLayout(false);
             this.msMainMenu.PerformLayout();
@@ -205,5 +231,7 @@
         private System.Windows.Forms.Button btnFileInfo;
         private System.Windows.Forms.SaveFileDialog sfdIDE;
         private System.Windows.Forms.ComboBox cbOpenedFiles;
+        private System.Windows.Forms.Label lblSaveFlag;
+        private System.Windows.Forms.ToolStripMenuItem tsmClose;
     }
 }
