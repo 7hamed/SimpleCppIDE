@@ -30,6 +30,7 @@ namespace SimpleCppIDE.Logic
         public string FileName { get; set; }
         public string Content { get; set; }
         public bool isChanged { get; set; }
+        public bool isNeedToSave { get; set; }
 
         
         public clsCppFile() // create file
@@ -38,7 +39,7 @@ namespace SimpleCppIDE.Logic
             _filePath = null;
             Content = null;
             isChanged = false;
-
+            isNeedToSave = true;
         }
 
         public clsCppFile(string filePath) // open file
@@ -47,6 +48,7 @@ namespace SimpleCppIDE.Logic
 
             Content = GetContent();
             isChanged = false;
+            isNeedToSave = false;
         }
 
         private string GetFileName()
@@ -68,7 +70,7 @@ namespace SimpleCppIDE.Logic
                 throw new InvalidOperationException("[!] the file path is empty.");
 
             File.WriteAllText(FilePath, Content);
-            isChanged = false;
+            isNeedToSave = false;
             return true;
         }
 
@@ -78,6 +80,7 @@ namespace SimpleCppIDE.Logic
             info += "file name : " + FileName + "\n";
             info += "content : " + (Content.Length == 0 ? "Empty" : "Alot of text") + "\n";
             info += "is changed : " + isChanged.ToString() + "\n";
+            info += "is need to save : " + isNeedToSave.ToString() + "\n";
 
             return info;
         }

@@ -65,7 +65,7 @@
             this.tsmFile});
             this.msMainMenu.Location = new System.Drawing.Point(0, 0);
             this.msMainMenu.Name = "msMainMenu";
-            this.msMainMenu.Size = new System.Drawing.Size(984, 30);
+            this.msMainMenu.Size = new System.Drawing.Size(984, 28);
             this.msMainMenu.TabIndex = 2;
             this.msMainMenu.Text = "menuStrip1";
             // 
@@ -112,7 +112,7 @@
             this.groupBox1.Controls.Add(this.btnRun);
             this.groupBox1.Controls.Add(this.btnCompile);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.groupBox1.Location = new System.Drawing.Point(0, 30);
+            this.groupBox1.Location = new System.Drawing.Point(0, 28);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(984, 60);
             this.groupBox1.TabIndex = 3;
