@@ -55,6 +55,7 @@
     <Compile Include="frmIDE.Designer.cs">
       <DependentUpon>frmIDE.cs</DependentUpon>
     </Compile>
+    <Compile Include="Logic\clsCompiledFile.cs" />
     <Compile Include="Logic\clsCompiler.cs" />
     <Compile Include="Logic\clsCppFile.cs" />
     <Compile Include="Logic\clsGlobal.cs" />

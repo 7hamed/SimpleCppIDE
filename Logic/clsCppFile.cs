@@ -32,6 +32,8 @@ namespace SimpleCppIDE.Logic
         public bool isChanged { get; set; }
         public bool isNeedToSave { get; set; }
 
+        public clsCompiledFile CompiledFile { get; set; }
+
         
         public clsCppFile() // create file
         {
@@ -56,7 +58,8 @@ namespace SimpleCppIDE.Logic
             if (_filePath == string.Empty)
                 return string.Empty;
 
-            return _filePath.Substring(_filePath.LastIndexOf('\\') + 1);
+            return Path.GetFileName(_filePath);
+            //return _filePath.Substring(_filePath.LastIndexOf('\\') + 1);
         }
 
         private string GetContent()
@@ -72,6 +75,13 @@ namespace SimpleCppIDE.Logic
             File.WriteAllText(FilePath, Content);
             isNeedToSave = false;
             return true;
+        }
+
+        public void Compile()
+        {
+            string errors = clsCompiler.Compile(FilePath);
+            string exePath = Path.ChangeExtension(FilePath, ".exe");
+            CompiledFile = new clsCompiledFile(exePath, errors);
         }
 
         public string FileInfo()

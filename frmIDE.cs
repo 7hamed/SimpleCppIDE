@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -25,13 +26,119 @@ namespace SimpleCppIDE
         public frmIDE()
         {
             InitializeComponent();
+
+            pTerminal.Visible = false;
+            setSizeCodeEditorFull();
+            
         }
 
         private void btnCompile_Click(object sender, EventArgs e)
         {
-            _SaveFile();
+            rtxtCodeEditor.Focus();
 
-            clsCompiler.Compile("test.cpp");
+            if (_currentFile == null)
+            {
+                MessageBox.Show("there is no file open.");
+                return;
+            }
+
+            CompileStartStyle();
+            CompileCurrentFile();
+            CompileEndStyle();
+
+            PrintResultInTerminal();
+            PopUpTerminal();
+            
+        }
+
+        private void PrintResultInTerminal()
+        {
+            if (_currentFile.CompiledFile.isSuccess)
+            {
+                rtxtTerminal.Text = _currentFile.CompiledFile.Errors;
+            }
+            else
+            {
+                rtxtTerminal.Text = _currentFile.CompiledFile.Errors;
+            }
+        }
+
+        private void CompileStartStyle()
+        {
+            btnCompile.BackColor = Color.Yellow;
+            btnCompile.Text = "Compiling";
+            btnCompile.Font = new Font(btnCompile.Font.FontFamily, btnCompile.Font.Size, FontStyle.Bold); // make the font bold
+            btnCompile.Refresh();
+        }
+
+        private void CompileEndStyle()
+        {
+            btnCompile.BackColor = SystemColors.Control;
+            btnCompile.Text = "Compile";
+            btnCompile.Font = new Font(btnCompile.Font, btnCompile.Font.Style & ~FontStyle.Bold); // remove font bold
+            btnCompile.Refresh();
+        }
+
+        private void setSizeCodeEditorMid()
+        {
+            rtxtCodeEditor.Size = new Size(881, 507);
+        }
+
+        private void setSizeCodeEditorFull()
+        {
+            rtxtCodeEditor.Size = new Size(881, 746);
+        }
+
+        private void PopUpTerminal()
+        {
+            setSizeCodeEditorMid();
+            pTerminal.Visible = true;
+        }
+
+        private void btnCloseTerminal_Click(object sender, EventArgs e)
+        {
+            rtxtCodeEditor.Focus();
+
+            pTerminal.Visible = false;
+            setSizeCodeEditorFull();
+        }
+
+        private bool CompileCurrentFile()
+        {
+            if (_currentFile.isNeedToSave)
+                SaveCurrentFile();
+
+            _currentFile.Compile();
+
+            return _currentFile.CompiledFile.isSuccess;
+        }
+
+        private void btnRun_Click(object sender, EventArgs e)
+        {
+            rtxtCodeEditor.Focus();
+
+            if (_currentFile == null)
+            {
+                MessageBox.Show("there is no file open.");
+                return;
+            }
+
+            if (_currentFile.CompiledFile == null)
+            {
+                var ans = MessageBox.Show("exe file not exist.\nDo you want to compile it ?", _currentFile.FileName, MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
+                if (ans == DialogResult.OK)
+                {
+                    btnCompile.PerformClick();
+                }
+                else
+                    return;
+            }
+
+            if (_currentFile.CompiledFile.isSuccess)
+            {
+                _currentFile.CompiledFile.Run();
+            }
+            // else if pupup not exist, ...
 
         }
 
@@ -55,16 +162,6 @@ namespace SimpleCppIDE
                 lblSaveFlag.Text = "Saved";
                 lblSaveFlag.ForeColor = Color.Green;
             }
-        }
-        
-
-        private void _SaveFile()
-        {
-            string pathFile = @"Test.cpp";
-
-            File.WriteAllText(pathFile, rtxtCodeEditor.Text);
-
-            MessageBox.Show("save file is done");
         }
 
         private void SaveCurrentFile()
@@ -90,7 +187,6 @@ namespace SimpleCppIDE
             if (_currentFile.isChanged)
                 SaveTextToCurrentContent();
 
-            //_currentFile.Content = rtxtCodeEditor.Text;
             if (_currentFile.Save())
             {
                 UpdateOpenedFileList();
@@ -116,32 +212,8 @@ namespace SimpleCppIDE
 
         }
 
-        private void btnRun_Click(object sender, EventArgs e)
-        {
-            if (File.Exists("main.exe"))
-            {
-
-                Process main = new Process();
-                main.StartInfo.FileName = "main.exe";
-
-                main.Start();
-            }
-            else
-            {
-                MessageBox.Show("the main file not exist");
-            }
-        }
-
         private void tsmOpen_Click(object sender, EventArgs e)
         {
-            //if (_currentFile != null && _currentFile.isChanged)
-            //{
-            //    var result = MessageBox.Show("before open a file.\nplease save the file...", _currentFile.FileName, MessageBoxButtons.OKCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
-            //    if (result == DialogResult.OK)
-            //        SaveCurrentFile();
-            //    else
-            //        return;
-            //}
             if(_currentFile != null && _currentFile.isChanged)
                 SaveTextToCurrentContent();
             
@@ -195,8 +267,8 @@ namespace SimpleCppIDE
         {
             var newFile = new clsCppFile();
 
-            newFile.FileName = "new_file";
-            newFile.Content = "new cpp file";
+            newFile.FileName = "Untitled_" + _openedFiles.Count.ToString();
+            newFile.Content = clsGlobal.DefaultFileContent;
 
             AddToOpendFileList(newFile);
 
@@ -223,8 +295,6 @@ namespace SimpleCppIDE
                 rtxtCodeEditor.Text = _currentFile.Content;
                 rtxtCodeEditor.TextChanged += rtxtCodeEditor_TextChanged;
 
-                //_currentFile.isChanged = false;
-                //_currentFile.isNeedToSave = false;
                 UpdateSaveFlag(_currentFile.isNeedToSave);
             }
         }
@@ -275,19 +345,7 @@ namespace SimpleCppIDE
                 return;
 
             if (_currentFile.isChanged)
-            {
                 SaveTextToCurrentContent();
-
-
-                //var ans = MessageBox.Show("before change the file.\nplease save the file...", _currentFile.FileName, MessageBoxButtons.OKCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
-                //if (ans == DialogResult.OK)
-                //    SaveCurrentFile();
-                //else
-                //{
-                //    cbOpenedFiles.SelectedIndex = _prevOpenedFileIndex;
-                //    return;
-                //}
-            }
 
             SetCurrentFile(_openedFiles[cbOpenedFiles.SelectedIndex]);
         }
@@ -317,11 +375,17 @@ namespace SimpleCppIDE
             
             if (_currentFile.isNeedToSave)
             {
-                var ans = MessageBox.Show("before close the file.\nplease save the file...", _currentFile.FileName, MessageBoxButtons.OKCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
-                if (ans == DialogResult.OK)
+                var ans = MessageBox.Show("before close the file.\nplease save the file...", _currentFile.FileName, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button3);
+                if (ans == DialogResult.Yes)
+                {
                     SaveCurrentFile();
-                else
+                    if (_currentFile.FilePath == null) return; // if save canceled
+                }
+                
+                if(ans == DialogResult.Cancel)
                     return;
+
+                // no : close the file and dont save
             }
 
             int currentIndex = _openedFiles.IndexOf(_currentFile);
@@ -364,9 +428,18 @@ namespace SimpleCppIDE
                 return;
 
             var ans = MessageBox.Show($"{namesOfNotSavedFiles}\nYou have unsaved changes.\nDo you want to save these files before exiting?",
-                "Unsaved Changes", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
-            
-            if (ans == DialogResult.OK)
+                "Unsaved Changes", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button3);
+
+            if (ans == DialogResult.No) // dont save, just exit
+                return;
+
+            if (ans == DialogResult.Cancel) // dont exit
+            {
+                e.Cancel = true;
+                return;
+            }
+
+            if (ans == DialogResult.Yes) // save and exit
             {
                 foreach (clsCppFile file in notSavedFiles)
                 {
@@ -388,13 +461,9 @@ namespace SimpleCppIDE
                     file.Save();
                 }
             }
-            else
-            {
-                e.Cancel = true;
-                return;
-            }
-
             
         }
+
+        
     }
 }

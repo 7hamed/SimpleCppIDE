@@ -20,3 +20,11 @@ namespace SimpleCppIDE
         }
     }
 }
+
+/*
+ *  1. undo , redo , connect with rtxtCodeEditor (in menu strip add Edit)
+ *  2. view , the terminal
+ *  3. color the keyword of the c++
+ * 
+ * 
+ */
