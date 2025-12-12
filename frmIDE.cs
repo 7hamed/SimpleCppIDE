@@ -91,6 +91,8 @@ namespace SimpleCppIDE
 
         private void PopUpTerminal()
         {
+            if (pTerminal.Visible) return;
+            
             setSizeCodeEditorMid();
             pTerminal.Visible = true;
         }
@@ -464,6 +466,42 @@ namespace SimpleCppIDE
             
         }
 
-        
+        private void btnUndo_Click(object sender, EventArgs e)
+        {
+            rtxtCodeEditor.Focus();
+            
+            if (rtxtCodeEditor.CanUndo)
+                rtxtCodeEditor.Undo();
+        }
+
+        private void btnRedo_Click(object sender, EventArgs e)
+        {
+            rtxtCodeEditor.Focus();
+
+            if (rtxtCodeEditor.CanRedo)
+                rtxtCodeEditor.Redo();
+        }
+
+        private void tsmUndo_Click(object sender, EventArgs e)
+        {
+            btnUndo.PerformClick();
+        }
+
+        private void tsmRedo_Click(object sender, EventArgs e)
+        {
+            btnRedo.PerformClick();
+        }
+
+        private void tsmTerminal_Click(object sender, EventArgs e)
+        {
+            if (!pTerminal.Visible)
+            {
+                PopUpTerminal();
+            }
+            else
+            {
+                btnCloseTerminal.PerformClick();
+            }
+        }
     }
 }
