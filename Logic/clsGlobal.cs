@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,6 +20,13 @@ namespace SimpleCppIDE.Logic
                                                   "    cout << \"Hello World\" << endl;\n\n" +
                                                   "    return 0;\n" +
                                                   "}";
+
+
+        static public Color NormalSyntaxColor = Color.Black;
+        static public Color KeywordsSyntaxColor = Color.Blue;
+        static public Color StringsSyntaxColor = Color.SandyBrown;
+        static public Color CommnetsSyntaxColor = Color.LimeGreen;
+        static public Color PreprocessorSyntaxColor = Color.DimGray;
 
 
     }

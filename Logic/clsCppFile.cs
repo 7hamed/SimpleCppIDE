@@ -94,5 +94,6 @@ namespace SimpleCppIDE.Logic
 
             return info;
         }
+
     }
 }
