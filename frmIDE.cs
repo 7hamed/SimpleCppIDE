@@ -220,7 +220,17 @@ namespace SimpleCppIDE
         private void tsmSave_Click(object sender, EventArgs e)
         {
             SaveCurrentFile();
+        }
 
+        private bool isFileExistInOpenedFiles(string filePath)
+        {
+            foreach (var file in _openedFiles)
+            {
+                if (file.FilePath == filePath)
+                    return true;
+            }
+
+            return false;
         }
 
         private void tsmOpen_Click(object sender, EventArgs e)
@@ -232,6 +242,12 @@ namespace SimpleCppIDE
 
             if (ans == DialogResult.OK)
             {
+                if (isFileExistInOpenedFiles(ofdIDE.FileName))
+                {
+                    MessageBox.Show("the file is already open");
+                    return;
+                }
+                
                 var openedFile = new clsCppFile(ofdIDE.FileName);
 
                 AddToOpendFileList(openedFile);
@@ -288,31 +304,31 @@ namespace SimpleCppIDE
             switch (typedChar)
             {
                 case '(':
-                case ')': // Function calls/params
+                case ')':
                 case '{':
-                case '}': // Code blocks
+                case '}':
                 case '[':
-                case ']': // Arrays
-                case ';':           // Statement terminator
-                case ',':           // Argument separator
-                case '.':           // Member access
-                case ':':           // Scope or ternary
+                case ']':
+                case ';':
+                case ',':
+                case '.':
+                case ':':
                 case '+':
                 case '-':
                 case '*':
                 case '/':
-                case '%': // Math
+                case '%':
                 case '=':
                 case '!':
                 case '<':
-                case '>':           // Logic/Assignment
+                case '>':
                 case '&':
                 case '|':
                 case '^':
-                case '~':           // Bitwise
+                case '~':
                 case '"':
-                case '\'':                              // Strings/Chars
-                case '#':                                         // Preprocessor
+                case '\'':
+                case '#':
                 case ' ':
                 case '\r':
                     _undoStack.Push(rtxtCodeEditor.Text);
