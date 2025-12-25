@@ -17,8 +17,8 @@ namespace SimpleCppIDE.Logic
                                                   "using namespace std;\n\n" +
                                                   "int main()\n" +
                                                   "{\n" +
-                                                  "    cout << \"Hello World\" << endl;\n\n" +
-                                                  "    return 0;\n" +
+                                                  "\tcout << \"Hello World\" << endl;\n\n" +
+                                                  "\treturn 0;\n" +
                                                   "}";
 
 

@@ -35,6 +35,11 @@
             this.tsmOpen = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmSave = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmClose = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmEdit = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmUndo = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmRedo = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmTerminal = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnRedo = new System.Windows.Forms.Button();
             this.btnUndo = new System.Windows.Forms.Button();
@@ -49,11 +54,9 @@
             this.pTerminal = new System.Windows.Forms.Panel();
             this.lblTerminalTitle = new System.Windows.Forms.Label();
             this.btnCloseTerminal = new System.Windows.Forms.Button();
-            this.tsmEdit = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmUndo = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmRedo = new System.Windows.Forms.ToolStripMenuItem();
-            this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmTerminal = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmPaste = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmCopy = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmCut = new System.Windows.Forms.ToolStripMenuItem();
             this.msMainMenu.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.pTerminal.SuspendLayout();
@@ -126,6 +129,50 @@
             this.tsmClose.Size = new System.Drawing.Size(224, 26);
             this.tsmClose.Text = "&Close";
             this.tsmClose.Click += new System.EventHandler(this.tsmClose_Click);
+            // 
+            // tsmEdit
+            // 
+            this.tsmEdit.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmUndo,
+            this.tsmRedo,
+            this.tsmCopy,
+            this.tsmPaste,
+            this.tsmCut});
+            this.tsmEdit.Name = "tsmEdit";
+            this.tsmEdit.Size = new System.Drawing.Size(49, 24);
+            this.tsmEdit.Text = "&Edit";
+            // 
+            // tsmUndo
+            // 
+            this.tsmUndo.Name = "tsmUndo";
+            this.tsmUndo.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
+            this.tsmUndo.Size = new System.Drawing.Size(224, 26);
+            this.tsmUndo.Text = "&Undo";
+            this.tsmUndo.Click += new System.EventHandler(this.tsmUndo_Click);
+            // 
+            // tsmRedo
+            // 
+            this.tsmRedo.Name = "tsmRedo";
+            this.tsmRedo.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Y)));
+            this.tsmRedo.Size = new System.Drawing.Size(224, 26);
+            this.tsmRedo.Text = "&Redo";
+            this.tsmRedo.Click += new System.EventHandler(this.tsmRedo_Click);
+            // 
+            // viewToolStripMenuItem
+            // 
+            this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmTerminal});
+            this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
+            this.viewToolStripMenuItem.Size = new System.Drawing.Size(55, 24);
+            this.viewToolStripMenuItem.Text = "&View";
+            // 
+            // tsmTerminal
+            // 
+            this.tsmTerminal.Name = "tsmTerminal";
+            this.tsmTerminal.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
+            this.tsmTerminal.Size = new System.Drawing.Size(199, 26);
+            this.tsmTerminal.Text = "&Terminal";
+            this.tsmTerminal.Click += new System.EventHandler(this.tsmTerminal_Click);
             // 
             // groupBox1
             // 
@@ -209,6 +256,7 @@
             this.btnFileInfo.TabIndex = 3;
             this.btnFileInfo.Text = "FIle Info";
             this.btnFileInfo.UseVisualStyleBackColor = true;
+            this.btnFileInfo.Visible = false;
             this.btnFileInfo.Click += new System.EventHandler(this.btnFileInfo_Click);
             // 
             // ofdIDE
@@ -229,6 +277,7 @@
             this.rtxtCodeEditor.Text = "";
             this.rtxtCodeEditor.WordWrap = false;
             this.rtxtCodeEditor.TextChanged += new System.EventHandler(this.rtxtCodeEditor_TextChanged);
+            this.rtxtCodeEditor.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.rtxtCodeEditor_KeyPress);
             // 
             // sfdIDE
             // 
@@ -283,46 +332,29 @@
             this.btnCloseTerminal.UseVisualStyleBackColor = false;
             this.btnCloseTerminal.Click += new System.EventHandler(this.btnCloseTerminal_Click);
             // 
-            // tsmEdit
+            // tsmPaste
             // 
-            this.tsmEdit.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmUndo,
-            this.tsmRedo});
-            this.tsmEdit.Name = "tsmEdit";
-            this.tsmEdit.Size = new System.Drawing.Size(49, 24);
-            this.tsmEdit.Text = "&Edit";
+            this.tsmPaste.Name = "tsmPaste";
+            this.tsmPaste.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
+            this.tsmPaste.Size = new System.Drawing.Size(224, 26);
+            this.tsmPaste.Text = "&Paste";
+            this.tsmPaste.Click += new System.EventHandler(this.tsmPaste_Click);
             // 
-            // tsmUndo
+            // tsmCopy
             // 
-            this.tsmUndo.Name = "tsmUndo";
-            this.tsmUndo.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
-            this.tsmUndo.Size = new System.Drawing.Size(224, 26);
-            this.tsmUndo.Text = "&Undo";
-            this.tsmUndo.Click += new System.EventHandler(this.tsmUndo_Click);
+            this.tsmCopy.Name = "tsmCopy";
+            this.tsmCopy.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
+            this.tsmCopy.Size = new System.Drawing.Size(224, 26);
+            this.tsmCopy.Text = "&Copy";
+            this.tsmCopy.Click += new System.EventHandler(this.tsmCopy_Click);
             // 
-            // tsmRedo
+            // tsmCut
             // 
-            this.tsmRedo.Name = "tsmRedo";
-            this.tsmRedo.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Y)));
-            this.tsmRedo.Size = new System.Drawing.Size(224, 26);
-            this.tsmRedo.Text = "&Redo";
-            this.tsmRedo.Click += new System.EventHandler(this.tsmRedo_Click);
-            // 
-            // viewToolStripMenuItem
-            // 
-            this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmTerminal});
-            this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
-            this.viewToolStripMenuItem.Size = new System.Drawing.Size(55, 24);
-            this.viewToolStripMenuItem.Text = "&View";
-            // 
-            // tsmTerminal
-            // 
-            this.tsmTerminal.Name = "tsmTerminal";
-            this.tsmTerminal.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
-            this.tsmTerminal.Size = new System.Drawing.Size(224, 26);
-            this.tsmTerminal.Text = "&Terminal";
-            this.tsmTerminal.Click += new System.EventHandler(this.tsmTerminal_Click);
+            this.tsmCut.Name = "tsmCut";
+            this.tsmCut.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
+            this.tsmCut.Size = new System.Drawing.Size(224, 26);
+            this.tsmCut.Text = "Cu&t";
+            this.tsmCut.Click += new System.EventHandler(this.tsmCut_Click);
             // 
             // frmIDE
             // 
@@ -376,5 +408,8 @@
         private System.Windows.Forms.ToolStripMenuItem tsmRedo;
         private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem tsmTerminal;
+        private System.Windows.Forms.ToolStripMenuItem tsmPaste;
+        private System.Windows.Forms.ToolStripMenuItem tsmCopy;
+        private System.Windows.Forms.ToolStripMenuItem tsmCut;
     }
 }

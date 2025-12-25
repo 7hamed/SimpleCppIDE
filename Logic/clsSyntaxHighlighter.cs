@@ -40,6 +40,7 @@ namespace SimpleCppIDE.Logic
             int originalIndex = rtxt.SelectionStart;
             int originalLength = rtxt.SelectionLength;
 
+            // DISABLE REDRAW: Stop the screen from flickering
             LockControlUpdate(rtxt, true);
 
             rtxt.Select(0, rtxt.Text.Length);
@@ -50,22 +51,27 @@ namespace SimpleCppIDE.Logic
             ApplyColor(rtxt, strings, clsGlobal.StringsSyntaxColor, 0, rtxt.Text.Length);
             ApplyColor(rtxt, preprocessor, clsGlobal.PreprocessorSyntaxColor, 0, rtxt.Text.Length);
 
-
             rtxt.Select(originalIndex, originalLength);
             rtxt.SelectionColor = clsGlobal.NormalSyntaxColor;
+            
+            // RE-ENABLE REDRAW: Stop the screen from flickering
             LockControlUpdate(rtxt, false);
         }
 
         public void HighlightCurrentLine(RichTextBox rtxt)
         {
+            if (rtxt.Text.Length <= 0)
+                return;
+
             int originalIndex = rtxt.SelectionStart;
             int originalLength = rtxt.SelectionLength;
+
+            // DISABLE REDRAW: Stop the screen from flickering
+            LockControlUpdate(rtxt, true);
 
             int lineNumber = rtxt.GetLineFromCharIndex(originalIndex);
             int startLineIndex = rtxt.GetFirstCharIndexFromLine(lineNumber);
             int lineLength = rtxt.Lines[lineNumber].Length;
-
-            LockControlUpdate(rtxt, true);
 
             rtxt.Select(startLineIndex, lineLength);
             rtxt.SelectionColor = clsGlobal.NormalSyntaxColor;
@@ -77,6 +83,8 @@ namespace SimpleCppIDE.Logic
 
             rtxt.Select(originalIndex, originalLength);
             //rtxt.SelectionColor = clsGlobal.NormalSyntaxColor;
+            
+            // RE-ENABLE REDRAW: Stop the screen from flickering
             LockControlUpdate(rtxt, false);
         }
 
@@ -101,5 +109,9 @@ namespace SimpleCppIDE.Logic
             SendMessage(control.Handle, WM_SETREDRAW, (IntPtr)(lockUpdate ? 0 : 1), IntPtr.Zero);
             if (!lockUpdate) control.Refresh();
         }
+
+        // These are "addresses" for specific Windows commands
+        private const int WM_USER = 0x0400;
+        private const int EM_SETUNDOLIMIT = WM_USER + 82;
     }
 }

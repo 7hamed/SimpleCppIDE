@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -20,6 +21,14 @@ namespace SimpleCppIDE
         private List<clsCppFile> _openedFiles = new List<clsCppFile>();
         private clsCppFile _currentFile;
 
+        private Stack<string> _undoStack = new Stack<string>();
+        private Stack<string> _redoStack = new Stack<string>();
+        private bool _isUndoRedoAction = false;
+        private bool _isFirstUndo = false;
+
+        private bool _isPasteAction = false;
+
+        private clsSyntaxHighlighter _highlighter = new clsSyntaxHighlighter();
         private int _prevOpenedFileIndex;
 
 
@@ -257,11 +266,60 @@ namespace SimpleCppIDE
 
         private void rtxtCodeEditor_TextChanged(object sender, EventArgs e)
         {
+            if (_isUndoRedoAction || _isPasteAction)
+                return;
+            
             if (_currentFile != null)
             {
                 _currentFile.isChanged = true;
                 _currentFile.isNeedToSave = true;
                 UpdateSaveFlag(_currentFile.isNeedToSave);
+
+                _highlighter.HighlightCurrentLine(rtxtCodeEditor);
+
+                ResetRedo();
+            }
+        }
+
+        private void rtxtCodeEditor_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            char typedChar = e.KeyChar;
+
+            switch (typedChar)
+            {
+                case '(':
+                case ')': // Function calls/params
+                case '{':
+                case '}': // Code blocks
+                case '[':
+                case ']': // Arrays
+                case ';':           // Statement terminator
+                case ',':           // Argument separator
+                case '.':           // Member access
+                case ':':           // Scope or ternary
+                case '+':
+                case '-':
+                case '*':
+                case '/':
+                case '%': // Math
+                case '=':
+                case '!':
+                case '<':
+                case '>':           // Logic/Assignment
+                case '&':
+                case '|':
+                case '^':
+                case '~':           // Bitwise
+                case '"':
+                case '\'':                              // Strings/Chars
+                case '#':                                         // Preprocessor
+                case ' ':
+                case '\r':
+                    _undoStack.Push(rtxtCodeEditor.Text);
+                    break;
+
+                default:
+                    break;
             }
         }
 
@@ -295,9 +353,12 @@ namespace SimpleCppIDE
             {
                 rtxtCodeEditor.TextChanged -= rtxtCodeEditor_TextChanged;
                 rtxtCodeEditor.Text = _currentFile.Content;
+                _highlighter.Highlight(rtxtCodeEditor);
                 rtxtCodeEditor.TextChanged += rtxtCodeEditor_TextChanged;
 
                 UpdateSaveFlag(_currentFile.isNeedToSave);
+
+                _undoStack.Push(rtxtCodeEditor.Text);
             }
         }
 
@@ -348,6 +409,9 @@ namespace SimpleCppIDE
 
             if (_currentFile.isChanged)
                 SaveTextToCurrentContent();
+
+            _undoStack.Clear();
+            _redoStack.Clear();
 
             SetCurrentFile(_openedFiles[cbOpenedFiles.SelectedIndex]);
         }
@@ -468,18 +532,71 @@ namespace SimpleCppIDE
 
         private void btnUndo_Click(object sender, EventArgs e)
         {
-            rtxtCodeEditor.Focus();
-            
-            if (rtxtCodeEditor.CanUndo)
-                rtxtCodeEditor.Undo();
+            if (_isFirstUndo)
+            {
+                _undoStack.Push(rtxtCodeEditor.Text);
+                _isFirstUndo = false;
+            }
+
+            if (_undoStack.Count > 1)
+            {
+                int originalIndex = rtxtCodeEditor.SelectionStart;
+                int originalLine = rtxtCodeEditor.GetLineFromCharIndex(originalIndex);
+                
+                _redoStack.Push(_undoStack.Pop());
+                
+                _isUndoRedoAction = true;
+                rtxtCodeEditor.Text = _undoStack.Peek();
+                _highlighter.Highlight(rtxtCodeEditor);
+
+                _isUndoRedoAction = false;
+
+                if (originalLine < rtxtCodeEditor.Lines.Length)
+                {
+                    int lastIndexOfLine = rtxtCodeEditor.Lines[originalLine].Length + rtxtCodeEditor.GetFirstCharIndexFromLine(originalLine);
+                    rtxtCodeEditor.Select(lastIndexOfLine, 0);
+                }
+                else
+                {
+                    rtxtCodeEditor.Select(rtxtCodeEditor.Text.Length, 0);
+                }
+            }
+
+            //rtxtCodeEditor.Focus();
         }
 
         private void btnRedo_Click(object sender, EventArgs e)
         {
-            rtxtCodeEditor.Focus();
+            if (_redoStack.Count > 0)
+            {
+                int originalIndex = rtxtCodeEditor.SelectionStart;
+                int originalLine = rtxtCodeEditor.GetLineFromCharIndex(originalIndex);
 
-            if (rtxtCodeEditor.CanRedo)
-                rtxtCodeEditor.Redo();
+                _undoStack.Push(_redoStack.Pop());
+                _isUndoRedoAction = true;
+                rtxtCodeEditor.Text = _undoStack.Peek();
+                _highlighter.Highlight(rtxtCodeEditor);
+
+                _isUndoRedoAction = false;
+
+                if (originalLine < rtxtCodeEditor.Lines.Length)
+                {
+                    int lastIndexOfLine = rtxtCodeEditor.Lines[originalLine].Length + rtxtCodeEditor.GetFirstCharIndexFromLine(originalLine);
+                    rtxtCodeEditor.Select(lastIndexOfLine, 0);
+                }
+                else
+                {
+                    rtxtCodeEditor.Select(rtxtCodeEditor.Text.Length, 0);
+                }
+            }
+
+            //rtxtCodeEditor.Focus();
+        }
+
+        private void ResetRedo()
+        {
+            _redoStack.Clear();
+            _isFirstUndo = true;
         }
 
         private void tsmUndo_Click(object sender, EventArgs e)
@@ -502,6 +619,45 @@ namespace SimpleCppIDE
             {
                 btnCloseTerminal.PerformClick();
             }
+        }
+
+        private void tsmPaste_Click(object sender, EventArgs e)
+        {
+            string pasteText = Clipboard.GetText();
+
+            if (!string.IsNullOrEmpty(pasteText))
+            {
+                int originalIndex = rtxtCodeEditor.SelectionStart;
+                int originalLength = rtxtCodeEditor.SelectionLength;
+
+                _isPasteAction = true;
+
+                if (originalLength > 0)
+                {
+                    rtxtCodeEditor.Text = rtxtCodeEditor.Text.Remove(originalIndex, originalLength).Insert(originalIndex, pasteText);
+                }
+                else
+                {
+                    rtxtCodeEditor.Text = rtxtCodeEditor.Text.Insert(originalIndex, pasteText);
+                }
+
+                _highlighter.Highlight(rtxtCodeEditor);
+
+                ResetRedo();
+
+                _isPasteAction = false;
+                rtxtCodeEditor.Select(originalIndex + pasteText.Length, 0);
+            }
+        }
+
+        private void tsmCopy_Click(object sender, EventArgs e)
+        {
+            rtxtCodeEditor.Copy();
+        }
+
+        private void tsmCut_Click(object sender, EventArgs e)
+        {
+            rtxtCodeEditor.Cut();
         }
     }
 }

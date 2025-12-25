@@ -59,6 +59,7 @@
     <Compile Include="Logic\clsCompiler.cs" />
     <Compile Include="Logic\clsCppFile.cs" />
     <Compile Include="Logic\clsGlobal.cs" />
+    <Compile Include="Logic\clsSyntaxHighlighter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="frmIDE.resx">
