@@ -38,6 +38,9 @@
             this.tsmEdit = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmUndo = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmRedo = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmCopy = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmPaste = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmCut = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmTerminal = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -54,9 +57,6 @@
             this.pTerminal = new System.Windows.Forms.Panel();
             this.lblTerminalTitle = new System.Windows.Forms.Label();
             this.btnCloseTerminal = new System.Windows.Forms.Button();
-            this.tsmPaste = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmCopy = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmCut = new System.Windows.Forms.ToolStripMenuItem();
             this.msMainMenu.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.pTerminal.SuspendLayout();
@@ -102,7 +102,7 @@
             // 
             this.tsmNew.Name = "tsmNew";
             this.tsmNew.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-            this.tsmNew.Size = new System.Drawing.Size(224, 26);
+            this.tsmNew.Size = new System.Drawing.Size(184, 26);
             this.tsmNew.Text = "&New";
             this.tsmNew.Click += new System.EventHandler(this.tsmNew_Click);
             // 
@@ -110,7 +110,7 @@
             // 
             this.tsmOpen.Name = "tsmOpen";
             this.tsmOpen.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.tsmOpen.Size = new System.Drawing.Size(224, 26);
+            this.tsmOpen.Size = new System.Drawing.Size(184, 26);
             this.tsmOpen.Text = "&Open";
             this.tsmOpen.Click += new System.EventHandler(this.tsmOpen_Click);
             // 
@@ -118,7 +118,7 @@
             // 
             this.tsmSave.Name = "tsmSave";
             this.tsmSave.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.tsmSave.Size = new System.Drawing.Size(224, 26);
+            this.tsmSave.Size = new System.Drawing.Size(184, 26);
             this.tsmSave.Text = "&Save";
             this.tsmSave.Click += new System.EventHandler(this.tsmSave_Click);
             // 
@@ -126,7 +126,7 @@
             // 
             this.tsmClose.Name = "tsmClose";
             this.tsmClose.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.W)));
-            this.tsmClose.Size = new System.Drawing.Size(224, 26);
+            this.tsmClose.Size = new System.Drawing.Size(184, 26);
             this.tsmClose.Text = "&Close";
             this.tsmClose.Click += new System.EventHandler(this.tsmClose_Click);
             // 
@@ -146,7 +146,7 @@
             // 
             this.tsmUndo.Name = "tsmUndo";
             this.tsmUndo.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
-            this.tsmUndo.Size = new System.Drawing.Size(224, 26);
+            this.tsmUndo.Size = new System.Drawing.Size(179, 26);
             this.tsmUndo.Text = "&Undo";
             this.tsmUndo.Click += new System.EventHandler(this.tsmUndo_Click);
             // 
@@ -154,9 +154,33 @@
             // 
             this.tsmRedo.Name = "tsmRedo";
             this.tsmRedo.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Y)));
-            this.tsmRedo.Size = new System.Drawing.Size(224, 26);
+            this.tsmRedo.Size = new System.Drawing.Size(179, 26);
             this.tsmRedo.Text = "&Redo";
             this.tsmRedo.Click += new System.EventHandler(this.tsmRedo_Click);
+            // 
+            // tsmCopy
+            // 
+            this.tsmCopy.Name = "tsmCopy";
+            this.tsmCopy.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
+            this.tsmCopy.Size = new System.Drawing.Size(179, 26);
+            this.tsmCopy.Text = "&Copy";
+            this.tsmCopy.Click += new System.EventHandler(this.tsmCopy_Click);
+            // 
+            // tsmPaste
+            // 
+            this.tsmPaste.Name = "tsmPaste";
+            this.tsmPaste.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
+            this.tsmPaste.Size = new System.Drawing.Size(179, 26);
+            this.tsmPaste.Text = "&Paste";
+            this.tsmPaste.Click += new System.EventHandler(this.tsmPaste_Click);
+            // 
+            // tsmCut
+            // 
+            this.tsmCut.Name = "tsmCut";
+            this.tsmCut.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
+            this.tsmCut.Size = new System.Drawing.Size(179, 26);
+            this.tsmCut.Text = "Cu&t";
+            this.tsmCut.Click += new System.EventHandler(this.tsmCut_Click);
             // 
             // viewToolStripMenuItem
             // 
@@ -320,7 +344,7 @@
             // 
             // btnCloseTerminal
             // 
-            this.btnCloseTerminal.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.btnCloseTerminal.BackColor = System.Drawing.Color.Coral;
             this.btnCloseTerminal.FlatAppearance.BorderSize = 0;
             this.btnCloseTerminal.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCloseTerminal.Font = new System.Drawing.Font("Microsoft Sans Serif", 5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -331,30 +355,6 @@
             this.btnCloseTerminal.Text = "X";
             this.btnCloseTerminal.UseVisualStyleBackColor = false;
             this.btnCloseTerminal.Click += new System.EventHandler(this.btnCloseTerminal_Click);
-            // 
-            // tsmPaste
-            // 
-            this.tsmPaste.Name = "tsmPaste";
-            this.tsmPaste.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
-            this.tsmPaste.Size = new System.Drawing.Size(224, 26);
-            this.tsmPaste.Text = "&Paste";
-            this.tsmPaste.Click += new System.EventHandler(this.tsmPaste_Click);
-            // 
-            // tsmCopy
-            // 
-            this.tsmCopy.Name = "tsmCopy";
-            this.tsmCopy.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.tsmCopy.Size = new System.Drawing.Size(224, 26);
-            this.tsmCopy.Text = "&Copy";
-            this.tsmCopy.Click += new System.EventHandler(this.tsmCopy_Click);
-            // 
-            // tsmCut
-            // 
-            this.tsmCut.Name = "tsmCut";
-            this.tsmCut.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
-            this.tsmCut.Size = new System.Drawing.Size(224, 26);
-            this.tsmCut.Text = "Cu&t";
-            this.tsmCut.Click += new System.EventHandler(this.tsmCut_Click);
             // 
             // frmIDE
             // 

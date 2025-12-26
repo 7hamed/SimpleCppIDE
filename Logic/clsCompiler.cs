@@ -11,6 +11,8 @@ namespace SimpleCppIDE.Logic
     internal static class clsCompiler
     {
 
+        static public string GppCompilerPathInSettings = "..\\..\\Settings\\GppCompilerPath.txt";
+
         static public string Compile(string sourceFilePath)
         {
             string exeFilePath = Path.ChangeExtension(sourceFilePath, ".exe");
@@ -40,6 +42,51 @@ namespace SimpleCppIDE.Logic
                 }
 
                 return clsGlobal.CompilerBuildSuccessfulString;
+            }
+        }
+
+
+        static public string FindGppCompilerPath()
+        {
+            // search in windows enviroment paths
+            string pathEnv = Environment.GetEnvironmentVariable("PATH");
+            if (pathEnv != null)
+            {
+                foreach (string path in pathEnv.Split(';'))
+                {
+                    string fullPath = Path.Combine(path, "g++.exe");
+
+                    if (File.Exists(fullPath))
+                        return fullPath;
+                }
+            }
+
+
+            return null;
+        }
+
+
+        static public bool isGppCompilerPathExistInSettings()
+        {
+            string gppPath = File.ReadAllText(GppCompilerPathInSettings);
+
+            return !string.IsNullOrEmpty(gppPath);
+        }
+
+        static public string GetGppCompilerPathFromSettings()
+        {
+            if (GppCompilerPathInSettings != null)
+                return File.ReadAllText(GppCompilerPathInSettings);
+
+            return null;
+        }
+
+        static public void SetCppCompilerPathInSettings(string gppPath)
+        {
+            if (GppCompilerPathInSettings != null)
+            {
+                File.WriteAllText(GppCompilerPathInSettings, gppPath);
+                clsGlobal.CompilerGppPath = gppPath;
             }
         }
 

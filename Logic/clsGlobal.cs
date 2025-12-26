@@ -10,7 +10,7 @@ namespace SimpleCppIDE.Logic
     internal static class clsGlobal
     {
 
-        static public string CompilerGppPath = @"C:\MinGW\bin\g++.exe";
+        static public string CompilerGppPath = "";
         static public string CompilerBuildSuccessfulString = "Build Successful !";
 
         static public string DefaultFileContent = "#include <iostream>\n\n" +

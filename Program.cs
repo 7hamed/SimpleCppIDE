@@ -26,7 +26,7 @@ namespace SimpleCppIDE
  *  2. view , the terminal [X]
  *  3. color the keyword of the c++ [X]
  *  4. add icons to make it more buity
- *  5. if opened files exist not open same file again
+ *  5. if opened files exist not open same file again  [X]
  *  6. when write { or ( automaticly adding } ) ]....
  *  7. do Undo, Redo from scratch [X]
  *  8. make window for setting like -> searching g++ compiler path

@@ -49,6 +49,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="frmCompilerConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCompilerConfig.Designer.cs">
+      <DependentUpon>frmCompilerConfig.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmIDE.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -62,6 +68,9 @@
     <Compile Include="Logic\clsSyntaxHighlighter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="frmCompilerConfig.resx">
+      <DependentUpon>frmCompilerConfig.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmIDE.resx">
       <DependentUpon>frmIDE.cs</DependentUpon>
     </EmbeddedResource>
@@ -87,6 +96,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Settings\GppCompilerPath.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

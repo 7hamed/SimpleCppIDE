@@ -38,12 +38,40 @@ namespace SimpleCppIDE
 
             pTerminal.Visible = false;
             setSizeCodeEditorFull();
-            
+
+            if(clsCompiler.isGppCompilerPathExistInSettings())
+                clsGlobal.CompilerGppPath = clsCompiler.GetGppCompilerPathFromSettings();
+            else
+                clsGlobal.CompilerGppPath = "";
+
+            isCompilerPathExist();
+
+        }
+
+        private bool isCompilerPathExist()
+        {
+            if (clsGlobal.CompilerGppPath == "")
+            {
+                btnCompile.BackColor = Color.OrangeRed;
+                return false;
+            }
+            else
+            {
+                btnCompile.BackColor = SystemColors.Control;
+                return true;
+            }
         }
 
         private void btnCompile_Click(object sender, EventArgs e)
         {
-            rtxtCodeEditor.Focus();
+            if (!isCompilerPathExist())
+            {
+                var formCompilerConfiguration = new frmCompilerConfig();
+                formCompilerConfiguration.ShowDialog();
+
+                isCompilerPathExist();
+                return;
+            }
 
             if (_currentFile == null)
             {
@@ -57,7 +85,8 @@ namespace SimpleCppIDE
 
             PrintResultInTerminal();
             PopUpTerminal();
-            
+
+            rtxtCodeEditor.Focus();
         }
 
         private void PrintResultInTerminal()
