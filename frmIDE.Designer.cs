@@ -301,6 +301,7 @@
             this.rtxtCodeEditor.Text = "";
             this.rtxtCodeEditor.WordWrap = false;
             this.rtxtCodeEditor.TextChanged += new System.EventHandler(this.rtxtCodeEditor_TextChanged);
+            this.rtxtCodeEditor.KeyDown += new System.Windows.Forms.KeyEventHandler(this.rtxtCodeEditor_KeyDown);
             this.rtxtCodeEditor.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.rtxtCodeEditor_KeyPress);
             // 
             // sfdIDE

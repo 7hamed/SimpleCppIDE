@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Resources;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -218,6 +219,12 @@ namespace SimpleCppIDE
 
                 if (ans == DialogResult.OK)
                 {
+                    if (isFileExistInOpenedFiles(sfdIDE.FileName))
+                    {
+                        MessageBox.Show("you cant save on opened file");
+                        return;
+                    }
+
                     _currentFile.FilePath = sfdIDE.FileName;
                 }
                 else
@@ -326,6 +333,76 @@ namespace SimpleCppIDE
             }
         }
 
+        private bool isCharExistInCurrentLine(char c)
+        {
+            int i = rtxtCodeEditor.SelectionStart;
+            while (i < rtxtCodeEditor.Text.Length && rtxtCodeEditor.Text[i] != '\n')
+            {
+                if (rtxtCodeEditor.Text[i] == c)
+                    return true;
+
+                i++;
+            }
+
+            return false;
+        }
+
+        private char OppositeBrackets(char c)
+        {
+            if (c == '(') return ')';
+            else if (c == '[') return ']';
+            else if (c == '{') return '}';
+            else return ' ';
+        }
+
+        private void AutoCompletionChar(char c, KeyPressEventArgs e)
+        {
+            if (isCharExistInCurrentLine(OppositeBrackets(c)))
+            {
+                e.Handled = false;
+            }
+            else
+            {
+                string additionText = c.ToString() + OppositeBrackets(c).ToString();
+                rtxtCodeEditor.SelectedText = additionText;
+                rtxtCodeEditor.SelectionStart += -additionText.Length + 1;
+                e.Handled = true;
+            }
+        }
+
+        private int TabNumberInCurrentLine()
+        {
+            int tabCounter = 0;
+            int i = rtxtCodeEditor.GetFirstCharIndexOfCurrentLine();
+            while (i < rtxtCodeEditor.Text.Length && rtxtCodeEditor.Text[i] == '\t')
+            {
+                tabCounter++;
+                i++;
+            }
+
+            return tabCounter;
+        }
+
+        private void SmartIndentationNewLine()
+        {
+            int tabNumber = TabNumberInCurrentLine();
+            string tabs = new string('\t', tabNumber);
+
+            rtxtCodeEditor.SelectedText = "\n" + tabs;
+        }
+
+        private void rtxtCodeEditor_KeyDown(object sender, KeyEventArgs e)
+        {
+            Keys k = e.KeyCode;
+
+            if (k == Keys.Enter)
+            {
+                SmartIndentationNewLine();
+                _undoStack.Push(rtxtCodeEditor.Text);
+                e.SuppressKeyPress = true;
+            }
+
+        }
         private void rtxtCodeEditor_KeyPress(object sender, KeyPressEventArgs e)
         {
             char typedChar = e.KeyChar;
@@ -333,10 +410,14 @@ namespace SimpleCppIDE
             switch (typedChar)
             {
                 case '(':
-                case ')':
                 case '{':
-                case '}':
                 case '[':
+                    AutoCompletionChar(typedChar, e);
+                    _undoStack.Push(rtxtCodeEditor.Text);
+                    break;
+
+                case ')':
+                case '}':
                 case ']':
                 case ';':
                 case ',':
@@ -359,7 +440,6 @@ namespace SimpleCppIDE
                 case '\'':
                 case '#':
                 case ' ':
-                case '\r':
                     _undoStack.Push(rtxtCodeEditor.Text);
                     break;
 
@@ -704,5 +784,7 @@ namespace SimpleCppIDE
         {
             rtxtCodeEditor.Cut();
         }
+
+        
     }
 }

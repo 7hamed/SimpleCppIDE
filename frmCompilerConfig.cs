@@ -57,6 +57,7 @@ namespace SimpleCppIDE
         private void btnCheck_Click(object sender, EventArgs e)
         {
             btnCheck.BackColor = Color.LightYellow;
+            btnCheck.Text = "Checking";
 
             if (isValidGppPath(txtPath.Text))
             {
@@ -69,6 +70,7 @@ namespace SimpleCppIDE
             }
 
             btnCheck.BackColor = SystemColors.Control;
+            btnCheck.Text = "Check";
         }
 
         private bool isValidGppPath(string path)
@@ -100,6 +102,19 @@ namespace SimpleCppIDE
                 return false;
             }
             
+        }
+
+        private void llblDownloadCompiler_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            try
+            {
+                Process.Start("https://sourceforge.net/projects/mingw/");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Could not open link: " + ex.Message);
+            }
+
         }
     }
 }

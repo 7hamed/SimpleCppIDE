@@ -120,4 +120,12 @@
   <metadata name="ofdCompilerConfig.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <data name="lblNote.Text" xml:space="preserve">
+    <value>Quick Setup Guide
+    1. Download: Get the MinGW installer from the link below.
+    2. Install: Run it and mark the "mingw32-gcc-g++" package for installation.
+    3. Locate: After installation, the file is typically at C:\MinGW\bin\g++.exe.
+    4. Configure: Click "Browse" to select the file manually,
+        or click "Find" to let the IDE search for it automatically.</value>
+  </data>
 </root>
