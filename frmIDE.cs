@@ -1,4 +1,5 @@
 ﻿using SimpleCppIDE.Logic;
+using SimpleCppIDE.Properties;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -92,13 +93,13 @@ namespace SimpleCppIDE
 
         private void PrintResultInTerminal()
         {
-            if (_currentFile.CompiledFile.isSuccess)
+            if (_currentFile.CompiledFile != null && _currentFile.CompiledFile.isSuccess)
             {
                 rtxtTerminal.Text = _currentFile.CompiledFile.Errors;
             }
             else
             {
-                rtxtTerminal.Text = _currentFile.CompiledFile.Errors;
+                rtxtTerminal.Text = "";//_currentFile.CompiledFile.Errors;
             }
         }
 
@@ -107,6 +108,8 @@ namespace SimpleCppIDE
             btnCompile.BackColor = Color.Yellow;
             btnCompile.Text = "Compiling";
             btnCompile.Font = new Font(btnCompile.Font.FontFamily, btnCompile.Font.Size, FontStyle.Bold); // make the font bold
+            btnCompile.TextAlign = ContentAlignment.MiddleCenter;
+            btnCompile.Image = null;
             btnCompile.Refresh();
         }
 
@@ -115,6 +118,9 @@ namespace SimpleCppIDE
             btnCompile.BackColor = SystemColors.Control;
             btnCompile.Text = "Compile";
             btnCompile.Font = new Font(btnCompile.Font, btnCompile.Font.Style & ~FontStyle.Bold); // remove font bold
+            btnCompile.TextAlign = ContentAlignment.MiddleRight;
+            btnCompile.Image = Resources.compile2;
+            btnCompile.ImageAlign = ContentAlignment.MiddleLeft;
             btnCompile.Refresh();
         }
 
@@ -147,7 +153,11 @@ namespace SimpleCppIDE
         private bool CompileCurrentFile()
         {
             if (_currentFile.isNeedToSave)
+            {
                 SaveCurrentFile();
+                if (_currentFile.isNeedToSave)
+                    return false;
+            }
 
             _currentFile.Compile();
 
@@ -173,13 +183,15 @@ namespace SimpleCppIDE
                 }
                 else
                     return;
+
+                if (_currentFile.CompiledFile == null)
+                    return;
             }
 
             if (_currentFile.CompiledFile.isSuccess)
             {
                 _currentFile.CompiledFile.Run();
             }
-            // else if pupup not exist, ...
 
         }
 
@@ -313,7 +325,8 @@ namespace SimpleCppIDE
 
         private void btnFileInfo_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(_currentFile.FileInfo());
+            if(_currentFile != null)
+                MessageBox.Show(_currentFile.FileInfo());
         }
 
         private void rtxtCodeEditor_TextChanged(object sender, EventArgs e)

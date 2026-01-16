@@ -82,6 +82,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="app.manifest" />
     <None Include="Properties\Settings.settings">
@@ -98,6 +99,22 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\new_file.png" />
+    <None Include="Resources\close_file.png" />
+    <None Include="Resources\copy_content.png" />
+    <None Include="Resources\cut_content.png" />
+    <None Include="Resources\new_file1.png" />
+    <None Include="Resources\new_file2.png" />
+    <None Include="Resources\open_file.png" />
+    <None Include="Resources\paste_content.png" />
+    <None Include="Resources\redo.png" />
+    <None Include="Resources\save_file.png" />
+    <None Include="Resources\terminal.png" />
+    <None Include="Resources\undo.png" />
+    <None Include="Resources\compile.png" />
+    <None Include="Resources\run.png" />
+    <None Include="Resources\terminal2.png" />
+    <None Include="Resources\compile2.png" />
     <Content Include="Settings\GppCompilerPath.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
