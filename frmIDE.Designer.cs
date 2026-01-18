@@ -74,7 +74,7 @@
             this.viewToolStripMenuItem});
             this.msMainMenu.Location = new System.Drawing.Point(0, 0);
             this.msMainMenu.Name = "msMainMenu";
-            this.msMainMenu.Size = new System.Drawing.Size(984, 28);
+            this.msMainMenu.Size = new System.Drawing.Size(984, 30);
             this.msMainMenu.TabIndex = 2;
             this.msMainMenu.Text = "menuStrip1";
             // 
@@ -86,7 +86,7 @@
             this.tsmSave,
             this.tsmClose});
             this.tsmFile.Name = "tsmFile";
-            this.tsmFile.Size = new System.Drawing.Size(46, 24);
+            this.tsmFile.Size = new System.Drawing.Size(46, 26);
             this.tsmFile.Text = "&File";
             // 
             // tsmNew
@@ -134,7 +134,7 @@
             this.tsmPaste,
             this.tsmCut});
             this.tsmEdit.Name = "tsmEdit";
-            this.tsmEdit.Size = new System.Drawing.Size(49, 24);
+            this.tsmEdit.Size = new System.Drawing.Size(49, 26);
             this.tsmEdit.Text = "&Edit";
             // 
             // tsmUndo
@@ -187,7 +187,7 @@
             this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmTerminal});
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
-            this.viewToolStripMenuItem.Size = new System.Drawing.Size(55, 24);
+            this.viewToolStripMenuItem.Size = new System.Drawing.Size(55, 26);
             this.viewToolStripMenuItem.Text = "&View";
             // 
             // tsmTerminal
@@ -209,7 +209,7 @@
             this.groupBox1.Controls.Add(this.btnRun);
             this.groupBox1.Controls.Add(this.btnCompile);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.groupBox1.Location = new System.Drawing.Point(0, 28);
+            this.groupBox1.Location = new System.Drawing.Point(0, 30);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(984, 60);
             this.groupBox1.TabIndex = 3;

@@ -99,7 +99,7 @@ namespace SimpleCppIDE
             }
             else
             {
-                rtxtTerminal.Text = "";//_currentFile.CompiledFile.Errors;
+                rtxtTerminal.Text = _currentFile.CompiledFile.Errors;
             }
         }
 
@@ -198,6 +198,11 @@ namespace SimpleCppIDE
             if (_currentFile.CompiledFile.isSuccess)
             {
                 _currentFile.CompiledFile.Run();
+            }
+            else
+            {
+                rtxtTerminal.Text = _currentFile.CompiledFile.Errors;
+                PopUpTerminal();
             }
 
         }
@@ -408,7 +413,17 @@ namespace SimpleCppIDE
             int tabNumber = TabNumberInCurrentLine();
             string tabs = new string('\t', tabNumber);
 
-            rtxtCodeEditor.SelectedText = "\n" + tabs;
+            int currentIndex = rtxtCodeEditor.SelectionStart;
+
+            if (rtxtCodeEditor.Text[currentIndex - 1] == '{') // The "Open Block" Indentation
+            {
+                rtxtCodeEditor.SelectedText = "\n" + tabs + "\t" + "\n" + tabs;
+                rtxtCodeEditor.Select(currentIndex + tabNumber + 2, 0);
+            }
+            else
+            {
+                rtxtCodeEditor.SelectedText = "\n" + tabs;
+            }
         }
 
         private void rtxtCodeEditor_KeyDown(object sender, KeyEventArgs e)
