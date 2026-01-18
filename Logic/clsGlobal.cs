@@ -11,6 +11,7 @@ namespace SimpleCppIDE.Logic
     {
 
         static public string CompilerGppPath = "";
+        static public string SettingsCompilerPathFile = @"./Settings/GppCompilerPath.txt";
         static public string CompilerBuildSuccessfulString = "Build Successful !";
 
         static public string DefaultFileContent = "#include <iostream>\n\n" +

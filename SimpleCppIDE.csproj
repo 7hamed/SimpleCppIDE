@@ -35,6 +35,9 @@
   <PropertyGroup>
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>IDE_icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -115,7 +118,7 @@
     <None Include="Resources\run.png" />
     <None Include="Resources\terminal2.png" />
     <None Include="Resources\compile2.png" />
-    <Content Include="Settings\GppCompilerPath.txt" />
+    <Content Include="IDE_icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

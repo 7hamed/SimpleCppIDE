@@ -11,7 +11,7 @@ namespace SimpleCppIDE.Logic
     internal static class clsCompiler
     {
 
-        static public string GppCompilerPathInSettings = "..\\..\\Settings\\GppCompilerPath.txt";
+        static public string GppCompilerPathInSettings = clsGlobal.SettingsCompilerPathFile;
 
         static public string Compile(string sourceFilePath)
         {

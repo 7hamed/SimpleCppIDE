@@ -192,10 +192,10 @@
             // 
             // tsmTerminal
             // 
-            this.tsmTerminal.Image = global::SimpleCppIDE.Properties.Resources.terminal;
+            this.tsmTerminal.Image = global::SimpleCppIDE.Properties.Resources.terminal2;
             this.tsmTerminal.Name = "tsmTerminal";
             this.tsmTerminal.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
-            this.tsmTerminal.Size = new System.Drawing.Size(199, 26);
+            this.tsmTerminal.Size = new System.Drawing.Size(224, 26);
             this.tsmTerminal.Text = "&Terminal";
             this.tsmTerminal.Click += new System.EventHandler(this.tsmTerminal_Click);
             // 
