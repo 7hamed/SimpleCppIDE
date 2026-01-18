@@ -42,6 +42,7 @@ namespace SimpleCppIDE.Logic
             Content = null;
             isChanged = false;
             isNeedToSave = true;
+            CompiledFile = null;
         }
 
         public clsCppFile(string filePath) // open file
@@ -51,6 +52,7 @@ namespace SimpleCppIDE.Logic
             Content = GetContent();
             isChanged = false;
             isNeedToSave = false;
+            CompiledFile = isCompiledFileExist();
         }
 
         private string GetFileName()
@@ -75,6 +77,17 @@ namespace SimpleCppIDE.Logic
             File.WriteAllText(FilePath, Content);
             isNeedToSave = false;
             return true;
+        }
+
+        private clsCompiledFile isCompiledFileExist()
+        {
+            string compiledFilePath = Path.ChangeExtension(FilePath, ".exe");
+            if (File.Exists(compiledFilePath))
+            {
+                return new clsCompiledFile(compiledFilePath, clsGlobal.CompilerBuildSuccessfulString);
+            }
+            else
+                return null;
         }
 
         public void Compile()

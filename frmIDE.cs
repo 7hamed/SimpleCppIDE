@@ -126,12 +126,14 @@ namespace SimpleCppIDE
 
         private void setSizeCodeEditorMid()
         {
-            rtxtCodeEditor.Size = new Size(881, 507);
+            tlpIDE.RowStyles[2].Height = 28;
+            tlpIDE.PerformLayout();
         }
 
         private void setSizeCodeEditorFull()
         {
-            rtxtCodeEditor.Size = new Size(881, 746);
+            tlpIDE.RowStyles[2].Height = 0;
+            tlpIDE.PerformLayout();
         }
 
         private void PopUpTerminal()
@@ -184,8 +186,13 @@ namespace SimpleCppIDE
                 else
                     return;
 
-                if (_currentFile.CompiledFile == null)
-                    return;
+                //if (_currentFile.CompiledFile == null)
+                //    return;
+            }
+
+            if (_currentFile.isNeedToSave) // old compiled file exist
+            {
+                btnCompile.PerformClick();
             }
 
             if (_currentFile.CompiledFile.isSuccess)
@@ -798,6 +805,6 @@ namespace SimpleCppIDE
             rtxtCodeEditor.Cut();
         }
 
-        
+
     }
 }

@@ -28,17 +28,29 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmIDE));
             this.msMainMenu = new System.Windows.Forms.MenuStrip();
             this.tsmFile = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmNew = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmOpen = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmSave = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmClose = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmEdit = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmUndo = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmRedo = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmCopy = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmPaste = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmCut = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmTerminal = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnRedo = new System.Windows.Forms.Button();
             this.btnUndo = new System.Windows.Forms.Button();
             this.lblSaveFlag = new System.Windows.Forms.Label();
+            this.btnFileInfo = new System.Windows.Forms.Button();
             this.cbOpenedFiles = new System.Windows.Forms.ComboBox();
             this.btnRun = new System.Windows.Forms.Button();
-            this.btnFileInfo = new System.Windows.Forms.Button();
+            this.btnCompile = new System.Windows.Forms.Button();
             this.ofdIDE = new System.Windows.Forms.OpenFileDialog();
             this.rtxtCodeEditor = new System.Windows.Forms.RichTextBox();
             this.sfdIDE = new System.Windows.Forms.SaveFileDialog();
@@ -46,20 +58,11 @@
             this.pTerminal = new System.Windows.Forms.Panel();
             this.lblTerminalTitle = new System.Windows.Forms.Label();
             this.btnCloseTerminal = new System.Windows.Forms.Button();
-            this.btnCompile = new System.Windows.Forms.Button();
-            this.tsmNew = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmOpen = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmSave = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmClose = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmUndo = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmRedo = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmCopy = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmPaste = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmCut = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmTerminal = new System.Windows.Forms.ToolStripMenuItem();
+            this.tlpIDE = new System.Windows.Forms.TableLayoutPanel();
             this.msMainMenu.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.pTerminal.SuspendLayout();
+            this.tlpIDE.SuspendLayout();
             this.SuspendLayout();
             // 
             // msMainMenu
@@ -86,6 +89,42 @@
             this.tsmFile.Size = new System.Drawing.Size(46, 24);
             this.tsmFile.Text = "&File";
             // 
+            // tsmNew
+            // 
+            this.tsmNew.Image = global::SimpleCppIDE.Properties.Resources.new_file2;
+            this.tsmNew.Name = "tsmNew";
+            this.tsmNew.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
+            this.tsmNew.Size = new System.Drawing.Size(184, 26);
+            this.tsmNew.Text = "&New";
+            this.tsmNew.Click += new System.EventHandler(this.tsmNew_Click);
+            // 
+            // tsmOpen
+            // 
+            this.tsmOpen.Image = global::SimpleCppIDE.Properties.Resources.open_file;
+            this.tsmOpen.Name = "tsmOpen";
+            this.tsmOpen.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
+            this.tsmOpen.Size = new System.Drawing.Size(184, 26);
+            this.tsmOpen.Text = "&Open";
+            this.tsmOpen.Click += new System.EventHandler(this.tsmOpen_Click);
+            // 
+            // tsmSave
+            // 
+            this.tsmSave.Image = global::SimpleCppIDE.Properties.Resources.save_file;
+            this.tsmSave.Name = "tsmSave";
+            this.tsmSave.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.tsmSave.Size = new System.Drawing.Size(184, 26);
+            this.tsmSave.Text = "&Save";
+            this.tsmSave.Click += new System.EventHandler(this.tsmSave_Click);
+            // 
+            // tsmClose
+            // 
+            this.tsmClose.Image = global::SimpleCppIDE.Properties.Resources.close_file;
+            this.tsmClose.Name = "tsmClose";
+            this.tsmClose.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.W)));
+            this.tsmClose.Size = new System.Drawing.Size(184, 26);
+            this.tsmClose.Text = "&Close";
+            this.tsmClose.Click += new System.EventHandler(this.tsmClose_Click);
+            // 
             // tsmEdit
             // 
             this.tsmEdit.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -98,6 +137,51 @@
             this.tsmEdit.Size = new System.Drawing.Size(49, 24);
             this.tsmEdit.Text = "&Edit";
             // 
+            // tsmUndo
+            // 
+            this.tsmUndo.Image = global::SimpleCppIDE.Properties.Resources.undo;
+            this.tsmUndo.Name = "tsmUndo";
+            this.tsmUndo.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
+            this.tsmUndo.Size = new System.Drawing.Size(179, 26);
+            this.tsmUndo.Text = "&Undo";
+            this.tsmUndo.Click += new System.EventHandler(this.tsmUndo_Click);
+            // 
+            // tsmRedo
+            // 
+            this.tsmRedo.Image = global::SimpleCppIDE.Properties.Resources.redo;
+            this.tsmRedo.Name = "tsmRedo";
+            this.tsmRedo.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Y)));
+            this.tsmRedo.Size = new System.Drawing.Size(179, 26);
+            this.tsmRedo.Text = "&Redo";
+            this.tsmRedo.Click += new System.EventHandler(this.tsmRedo_Click);
+            // 
+            // tsmCopy
+            // 
+            this.tsmCopy.Image = global::SimpleCppIDE.Properties.Resources.copy_content;
+            this.tsmCopy.Name = "tsmCopy";
+            this.tsmCopy.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
+            this.tsmCopy.Size = new System.Drawing.Size(179, 26);
+            this.tsmCopy.Text = "&Copy";
+            this.tsmCopy.Click += new System.EventHandler(this.tsmCopy_Click);
+            // 
+            // tsmPaste
+            // 
+            this.tsmPaste.Image = global::SimpleCppIDE.Properties.Resources.paste_content;
+            this.tsmPaste.Name = "tsmPaste";
+            this.tsmPaste.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
+            this.tsmPaste.Size = new System.Drawing.Size(179, 26);
+            this.tsmPaste.Text = "&Paste";
+            this.tsmPaste.Click += new System.EventHandler(this.tsmPaste_Click);
+            // 
+            // tsmCut
+            // 
+            this.tsmCut.Image = global::SimpleCppIDE.Properties.Resources.cut_content;
+            this.tsmCut.Name = "tsmCut";
+            this.tsmCut.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
+            this.tsmCut.Size = new System.Drawing.Size(179, 26);
+            this.tsmCut.Text = "Cu&t";
+            this.tsmCut.Click += new System.EventHandler(this.tsmCut_Click);
+            // 
             // viewToolStripMenuItem
             // 
             this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -105,6 +189,15 @@
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
             this.viewToolStripMenuItem.Size = new System.Drawing.Size(55, 24);
             this.viewToolStripMenuItem.Text = "&View";
+            // 
+            // tsmTerminal
+            // 
+            this.tsmTerminal.Image = global::SimpleCppIDE.Properties.Resources.terminal;
+            this.tsmTerminal.Name = "tsmTerminal";
+            this.tsmTerminal.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
+            this.tsmTerminal.Size = new System.Drawing.Size(199, 26);
+            this.tsmTerminal.Text = "&Terminal";
+            this.tsmTerminal.Click += new System.EventHandler(this.tsmTerminal_Click);
             // 
             // groupBox1
             // 
@@ -154,6 +247,7 @@
             // 
             // lblSaveFlag
             // 
+            this.lblSaveFlag.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblSaveFlag.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSaveFlag.Location = new System.Drawing.Point(542, 23);
             this.lblSaveFlag.Name = "lblSaveFlag";
@@ -162,8 +256,23 @@
             this.lblSaveFlag.Text = "not save";
             this.lblSaveFlag.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // btnFileInfo
+            // 
+            this.btnFileInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnFileInfo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFileInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnFileInfo.Location = new System.Drawing.Point(915, 19);
+            this.btnFileInfo.Name = "btnFileInfo";
+            this.btnFileInfo.Size = new System.Drawing.Size(27, 29);
+            this.btnFileInfo.TabIndex = 3;
+            this.btnFileInfo.TabStop = false;
+            this.btnFileInfo.Text = "i";
+            this.btnFileInfo.UseVisualStyleBackColor = true;
+            this.btnFileInfo.Click += new System.EventHandler(this.btnFileInfo_Click);
+            // 
             // cbOpenedFiles
             // 
+            this.cbOpenedFiles.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.cbOpenedFiles.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbOpenedFiles.FormattingEnabled = true;
             this.cbOpenedFiles.Location = new System.Drawing.Point(648, 22);
@@ -189,18 +298,20 @@
             this.btnRun.UseVisualStyleBackColor = true;
             this.btnRun.Click += new System.EventHandler(this.btnRun_Click);
             // 
-            // btnFileInfo
+            // btnCompile
             // 
-            this.btnFileInfo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnFileInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnFileInfo.Location = new System.Drawing.Point(915, 19);
-            this.btnFileInfo.Name = "btnFileInfo";
-            this.btnFileInfo.Size = new System.Drawing.Size(27, 29);
-            this.btnFileInfo.TabIndex = 3;
-            this.btnFileInfo.TabStop = false;
-            this.btnFileInfo.Text = "i";
-            this.btnFileInfo.UseVisualStyleBackColor = true;
-            this.btnFileInfo.Click += new System.EventHandler(this.btnFileInfo_Click);
+            this.btnCompile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCompile.Image = global::SimpleCppIDE.Properties.Resources.compile2;
+            this.btnCompile.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCompile.Location = new System.Drawing.Point(97, 19);
+            this.btnCompile.Name = "btnCompile";
+            this.btnCompile.Size = new System.Drawing.Size(90, 29);
+            this.btnCompile.TabIndex = 1;
+            this.btnCompile.TabStop = false;
+            this.btnCompile.Text = "Compile";
+            this.btnCompile.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnCompile.UseVisualStyleBackColor = true;
+            this.btnCompile.Click += new System.EventHandler(this.btnCompile_Click);
             // 
             // ofdIDE
             // 
@@ -212,10 +323,11 @@
             // 
             this.rtxtCodeEditor.AcceptsTab = true;
             this.rtxtCodeEditor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.rtxtCodeEditor.Dock = System.Windows.Forms.DockStyle.Fill;
             this.rtxtCodeEditor.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtxtCodeEditor.Location = new System.Drawing.Point(49, 105);
+            this.rtxtCodeEditor.Location = new System.Drawing.Point(52, 3);
             this.rtxtCodeEditor.Name = "rtxtCodeEditor";
-            this.rtxtCodeEditor.Size = new System.Drawing.Size(881, 507);
+            this.rtxtCodeEditor.Size = new System.Drawing.Size(879, 527);
             this.rtxtCodeEditor.TabIndex = 4;
             this.rtxtCodeEditor.Text = "";
             this.rtxtCodeEditor.WordWrap = false;
@@ -232,6 +344,9 @@
             // rtxtTerminal
             // 
             this.rtxtTerminal.AcceptsTab = true;
+            this.rtxtTerminal.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.rtxtTerminal.BackColor = System.Drawing.SystemColors.ControlLight;
             this.rtxtTerminal.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtxtTerminal.Location = new System.Drawing.Point(3, 27);
@@ -247,9 +362,10 @@
             this.pTerminal.Controls.Add(this.lblTerminalTitle);
             this.pTerminal.Controls.Add(this.btnCloseTerminal);
             this.pTerminal.Controls.Add(this.rtxtTerminal);
-            this.pTerminal.Location = new System.Drawing.Point(49, 635);
+            this.pTerminal.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pTerminal.Location = new System.Drawing.Point(52, 551);
             this.pTerminal.Name = "pTerminal";
-            this.pTerminal.Size = new System.Drawing.Size(881, 233);
+            this.pTerminal.Size = new System.Drawing.Size(879, 213);
             this.pTerminal.TabIndex = 6;
             // 
             // lblTerminalTitle
@@ -264,6 +380,7 @@
             // 
             // btnCloseTerminal
             // 
+            this.btnCloseTerminal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCloseTerminal.BackColor = System.Drawing.Color.Coral;
             this.btnCloseTerminal.FlatAppearance.BorderSize = 0;
             this.btnCloseTerminal.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -276,121 +393,38 @@
             this.btnCloseTerminal.UseVisualStyleBackColor = false;
             this.btnCloseTerminal.Click += new System.EventHandler(this.btnCloseTerminal_Click);
             // 
-            // btnCompile
+            // tlpIDE
             // 
-            this.btnCompile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCompile.Image = global::SimpleCppIDE.Properties.Resources.compile2;
-            this.btnCompile.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCompile.Location = new System.Drawing.Point(97, 19);
-            this.btnCompile.Name = "btnCompile";
-            this.btnCompile.Size = new System.Drawing.Size(90, 29);
-            this.btnCompile.TabIndex = 1;
-            this.btnCompile.TabStop = false;
-            this.btnCompile.Text = "Compile";
-            this.btnCompile.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnCompile.UseVisualStyleBackColor = true;
-            this.btnCompile.Click += new System.EventHandler(this.btnCompile_Click);
-            // 
-            // tsmNew
-            // 
-            this.tsmNew.Image = global::SimpleCppIDE.Properties.Resources.new_file2;
-            this.tsmNew.Name = "tsmNew";
-            this.tsmNew.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-            this.tsmNew.Size = new System.Drawing.Size(184, 26);
-            this.tsmNew.Text = "&New";
-            this.tsmNew.Click += new System.EventHandler(this.tsmNew_Click);
-            // 
-            // tsmOpen
-            // 
-            this.tsmOpen.Image = global::SimpleCppIDE.Properties.Resources.open_file;
-            this.tsmOpen.Name = "tsmOpen";
-            this.tsmOpen.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.tsmOpen.Size = new System.Drawing.Size(184, 26);
-            this.tsmOpen.Text = "&Open";
-            this.tsmOpen.Click += new System.EventHandler(this.tsmOpen_Click);
-            // 
-            // tsmSave
-            // 
-            this.tsmSave.Image = global::SimpleCppIDE.Properties.Resources.save_file;
-            this.tsmSave.Name = "tsmSave";
-            this.tsmSave.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.tsmSave.Size = new System.Drawing.Size(184, 26);
-            this.tsmSave.Text = "&Save";
-            this.tsmSave.Click += new System.EventHandler(this.tsmSave_Click);
-            // 
-            // tsmClose
-            // 
-            this.tsmClose.Image = global::SimpleCppIDE.Properties.Resources.close_file;
-            this.tsmClose.Name = "tsmClose";
-            this.tsmClose.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.W)));
-            this.tsmClose.Size = new System.Drawing.Size(184, 26);
-            this.tsmClose.Text = "&Close";
-            this.tsmClose.Click += new System.EventHandler(this.tsmClose_Click);
-            // 
-            // tsmUndo
-            // 
-            this.tsmUndo.Image = global::SimpleCppIDE.Properties.Resources.undo;
-            this.tsmUndo.Name = "tsmUndo";
-            this.tsmUndo.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
-            this.tsmUndo.Size = new System.Drawing.Size(224, 26);
-            this.tsmUndo.Text = "&Undo";
-            this.tsmUndo.Click += new System.EventHandler(this.tsmUndo_Click);
-            // 
-            // tsmRedo
-            // 
-            this.tsmRedo.Image = global::SimpleCppIDE.Properties.Resources.redo;
-            this.tsmRedo.Name = "tsmRedo";
-            this.tsmRedo.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Y)));
-            this.tsmRedo.Size = new System.Drawing.Size(224, 26);
-            this.tsmRedo.Text = "&Redo";
-            this.tsmRedo.Click += new System.EventHandler(this.tsmRedo_Click);
-            // 
-            // tsmCopy
-            // 
-            this.tsmCopy.Image = global::SimpleCppIDE.Properties.Resources.copy_content;
-            this.tsmCopy.Name = "tsmCopy";
-            this.tsmCopy.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.tsmCopy.Size = new System.Drawing.Size(224, 26);
-            this.tsmCopy.Text = "&Copy";
-            this.tsmCopy.Click += new System.EventHandler(this.tsmCopy_Click);
-            // 
-            // tsmPaste
-            // 
-            this.tsmPaste.Image = global::SimpleCppIDE.Properties.Resources.paste_content;
-            this.tsmPaste.Name = "tsmPaste";
-            this.tsmPaste.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
-            this.tsmPaste.Size = new System.Drawing.Size(224, 26);
-            this.tsmPaste.Text = "&Paste";
-            this.tsmPaste.Click += new System.EventHandler(this.tsmPaste_Click);
-            // 
-            // tsmCut
-            // 
-            this.tsmCut.Image = global::SimpleCppIDE.Properties.Resources.cut_content;
-            this.tsmCut.Name = "tsmCut";
-            this.tsmCut.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
-            this.tsmCut.Size = new System.Drawing.Size(224, 26);
-            this.tsmCut.Text = "Cu&t";
-            this.tsmCut.Click += new System.EventHandler(this.tsmCut_Click);
-            // 
-            // tsmTerminal
-            // 
-            this.tsmTerminal.Image = global::SimpleCppIDE.Properties.Resources.terminal;
-            this.tsmTerminal.Name = "tsmTerminal";
-            this.tsmTerminal.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
-            this.tsmTerminal.Size = new System.Drawing.Size(199, 26);
-            this.tsmTerminal.Text = "&Terminal";
-            this.tsmTerminal.Click += new System.EventHandler(this.tsmTerminal_Click);
+            this.tlpIDE.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tlpIDE.ColumnCount = 3;
+            this.tlpIDE.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 5F));
+            this.tlpIDE.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 90F));
+            this.tlpIDE.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 5F));
+            this.tlpIDE.Controls.Add(this.rtxtCodeEditor, 1, 0);
+            this.tlpIDE.Controls.Add(this.pTerminal, 1, 2);
+            this.tlpIDE.Location = new System.Drawing.Point(0, 94);
+            this.tlpIDE.Name = "tlpIDE";
+            this.tlpIDE.RowCount = 4;
+            this.tlpIDE.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 68F));
+            this.tlpIDE.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 2F));
+            this.tlpIDE.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 28F));
+            this.tlpIDE.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 2F));
+            this.tlpIDE.Size = new System.Drawing.Size(984, 785);
+            this.tlpIDE.TabIndex = 7;
             // 
             // frmIDE
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(984, 880);
-            this.Controls.Add(this.pTerminal);
-            this.Controls.Add(this.rtxtCodeEditor);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.msMainMenu);
+            this.Controls.Add(this.tlpIDE);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.msMainMenu;
+            this.MinimumSize = new System.Drawing.Size(1000, 400);
             this.Name = "frmIDE";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "IDE";
@@ -401,6 +435,7 @@
             this.groupBox1.ResumeLayout(false);
             this.pTerminal.ResumeLayout(false);
             this.pTerminal.PerformLayout();
+            this.tlpIDE.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -436,5 +471,6 @@
         private System.Windows.Forms.ToolStripMenuItem tsmPaste;
         private System.Windows.Forms.ToolStripMenuItem tsmCopy;
         private System.Windows.Forms.ToolStripMenuItem tsmCut;
+        private System.Windows.Forms.TableLayoutPanel tlpIDE;
     }
 }
