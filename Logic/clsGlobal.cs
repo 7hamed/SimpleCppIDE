@@ -19,6 +19,7 @@ namespace SimpleCppIDE.Logic
                                                   "int main()\n" +
                                                   "{\n" +
                                                   "\tcout << \"Hello World\" << endl;\n\n" +
+                                                  "\tsystem(\"pause\");\n" +
                                                   "\treturn 0;\n" +
                                                   "}";
 

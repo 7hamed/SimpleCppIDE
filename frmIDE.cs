@@ -215,7 +215,6 @@ namespace SimpleCppIDE
                 lblSaveFlag.Text = "";
                 return;
             }
-
             
             if (isNeedToSave)
             {
@@ -377,6 +376,7 @@ namespace SimpleCppIDE
             if (c == '(') return ')';
             else if (c == '[') return ']';
             else if (c == '{') return '}';
+            else if (c == '"') return '"';
             else return ' ';
         }
 
@@ -447,6 +447,7 @@ namespace SimpleCppIDE
                 case '(':
                 case '{':
                 case '[':
+                case '"':
                     AutoCompletionChar(typedChar, e);
                     _undoStack.Push(rtxtCodeEditor.Text);
                     break;
@@ -471,7 +472,6 @@ namespace SimpleCppIDE
                 case '|':
                 case '^':
                 case '~':
-                case '"':
                 case '\'':
                 case '#':
                 case ' ':
@@ -564,6 +564,9 @@ namespace SimpleCppIDE
 
         private void cbOpenedFiles_SelectionChangeCommitted(object sender, EventArgs e)
         {
+            if (_currentFile == null)
+                return;
+         
             if (_prevOpenedFileIndex == cbOpenedFiles.SelectedIndex)
                 return;
 
@@ -710,6 +713,9 @@ namespace SimpleCppIDE
                 _highlighter.Highlight(rtxtCodeEditor);
 
                 _isUndoRedoAction = false;
+                _currentFile.isNeedToSave = true;
+                _currentFile.isChanged = true;
+                UpdateSaveFlag(_currentFile.isNeedToSave);
 
                 if (originalLine < rtxtCodeEditor.Lines.Length)
                 {
@@ -738,6 +744,9 @@ namespace SimpleCppIDE
                 _highlighter.Highlight(rtxtCodeEditor);
 
                 _isUndoRedoAction = false;
+                _currentFile.isNeedToSave = true;
+                _currentFile.isChanged = true;
+                UpdateSaveFlag(_currentFile.isNeedToSave);
 
                 if (originalLine < rtxtCodeEditor.Lines.Length)
                 {
